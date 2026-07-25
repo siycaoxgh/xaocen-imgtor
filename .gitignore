@@ -2,6 +2,7 @@ build/
 dist/
 release/
 archive/
+publish-temp/
 config.json
 __pycache__/
 **/__pycache__/
