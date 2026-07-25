@@ -2,9 +2,10 @@
 
 ## 文档与许可证补充 — 2026-07-25
 
-- 根目录新增标准 Apache-2.0 `LICENSE` 与 `NOTICE` 文件，GitHub 可自动识别项目许可证。
+- 根目录新增标准 Apache-2.0 `LICENSE` 与 `NOTICE` 文件，版权主体统一为 `XAOCEN STUDIO`，GitHub 可自动识别项目许可证。
 - README 补充功能说明、源码运行、免安装发行版、插件安装、测试、构建、平台支持、更新日志和版权信息。
 - 明确第三方依赖与可选插件继续遵循各自许可证。
+- 将平台支持和插件分发说明整理到 `docs/`，保留根目录 README、LICENSE、NOTICE 和 CHANGELOG 作为项目入口文档。
 
 ## v4.9.0 — 2026-07-25
 
