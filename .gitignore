@@ -1,0 +1,14 @@
+build/
+dist/
+release/
+archive/
+config.json
+__pycache__/
+**/__pycache__/
+*.pyc
+archive/runtime/*.log
+archive/runtime/*.lock
+archive/runtime/*.json
+config.json.lock
+.drawru-imgter-main.lock
+.drawru-imgter-status.json

@@ -1,0 +1,14 @@
+{
+  "id": "android-motion-photo",
+  "api_version": 1,
+  "name": "Android Motion Photo",
+  "version": "0.2.0-prototype",
+  "platforms": ["windows", "macos", "linux"],
+  "capabilities": [
+    "motion-photo-inspect",
+    "motion-photo-export",
+    "motion-photo-extract"
+  ],
+  "entrypoint": "motion_photo.py",
+  "commands": ["inspect", "create", "extract"]
+}

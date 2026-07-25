@@ -1,0 +1,10 @@
+{
+  "id": "video-recorder-ffmpeg",
+  "api_version": 1,
+  "name": "MP4 Video Recorder (FFmpeg)",
+  "version": "0.3.0-prototype",
+  "platforms": ["windows"],
+  "capabilities": ["video-record-mp4", "video-region-capture", "ffmpeg-health-check", "video-probe", "video-thumbnails", "video-clip"],
+  "entrypoint": "video_recorder.py",
+  "commands": ["check", "record", "probe", "thumbnails", "clip"]
+}

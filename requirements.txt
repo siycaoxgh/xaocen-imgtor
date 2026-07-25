@@ -1,0 +1,5 @@
+# drawru-imgter 依赖
+Pillow>=9.0.0
+pynput>=1.7.0
+pywebview>=5.3.0
+pystray>=0.19.5

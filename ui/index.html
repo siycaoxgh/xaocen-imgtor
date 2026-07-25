@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XAOCEN ImgTor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="side">
+      <div class="brand" id="brand" title="展开侧栏">
+        <span class="brand-mark" data-icon="brand"></span>
+        <span class="brand-name"><span data-i18n="brand.part1">XAOCEN</span><span data-i18n="brand.part2">ImgTor</span></span>
+        <button class="sidebar-toggle" id="collapseSidebar" type="button" aria-label="Collapse sidebar"><span data-icon="chevronLeft"></span></button>
+      </div>
+      <nav class="nav" id="nav" aria-label="Navigation"></nav>
+      <div class="side-bottom">
+        <div class="copyright">© 2026 XAOCEN STUDIO</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <h1 id="pageTitle" data-panel-title>启动器</h1>
+        <div class="top-status">
+          <span class="badge hotkey-badge" id="hotkeyBadge">Ctrl + Shift + X</span>
+          <span class="badge version-badge" data-version>v4.9.0</span>
+        </div>
+      </header>
+
+      <section class="content">
+        <section class="panel active" id="launcher">
+          <p class="sub" data-i18n="home.subtitle">快速截图、动图录制、图片浏览与裁剪。</p>
+          <div class="feature-grid">
+            <button class="feature-card" data-go="screenshot">
+              <span class="feature-icon cyan" data-icon="capture"></span>
+              <span class="feature-copy"><strong data-i18n="home.capture.title">快速截图</strong><small data-i18n="home.capture.desc">比例、固定尺寸、格式与剪贴板。</small></span>
+              <span class="card-arrow" data-icon="arrow"></span>
+            </button>
+            <button class="feature-card" data-go="gif">
+              <span class="feature-icon yellow" data-icon="record"></span>
+              <span class="feature-copy"><strong data-i18n="home.record.title">动图录制</strong><small data-i18n="home.record.desc">比例、FPS、GIF/APNG/WebP。</small></span>
+              <span class="card-arrow" data-icon="arrow"></span>
+            </button>
+            <button class="feature-card" data-go="gallery">
+              <span class="feature-icon blue" data-icon="gallery"></span>
+              <span class="feature-copy"><strong data-i18n="home.gallery.title">图片浏览</strong><small data-i18n="home.gallery.desc">缩略图、动图预览、详情与管理。</small></span>
+              <span class="card-arrow" data-icon="arrow"></span>
+            </button>
+            <button class="feature-card" data-go="crop">
+              <span class="feature-icon orange" data-icon="crop"></span>
+              <span class="feature-copy"><strong data-i18n="home.crop.title">图片裁剪</strong><small data-i18n="home.crop.desc">拖放图片，实时预览并保存。</small></span>
+              <span class="card-arrow" data-icon="arrow"></span>
+            </button>
+          </div>
+        </section>
+
+        <section class="panel" id="screenshot">
+          <p class="sub" data-i18n="screenshot.subtitle">调整参数后立即应用到下一次截图。</p>
+          <div class="box screenshot-quickbar">
+            <div class="shot-shortcut-info"><div class="minor-title" data-i18n="screenshot.hotkey">截图快捷键</div><span class="shortcut-inline" id="shotShortcut">Ctrl + Shift + X</span><span class="status-chip is-running" id="listenerStatus">截图监听已启用</span></div>
+            <div class="row shot-shortcut-actions"><button class="secondary compact" id="restartListener"><span data-icon="refresh"></span><span data-i18n="screenshot.restart">重启截图监听</span></button><button class="secondary compact" data-go="settings"><span data-icon="settings"></span><span data-i18n="screenshot.configureHotkey">在设置中修改</span></button></div>
+          </div>
+          <div class="box screenshot-settings-box">
+            <h3 data-i18n="screenshot.mode">选区模式</h3>
+            <div class="segmented"><button id="shotModeFree" data-shot-mode="free" data-i18n="mode.free">自由大小</button><button id="shotModeRatio" data-shot-mode="ratio" data-i18n="mode.ratio">固定比例</button><button id="shotModeFixed" data-shot-mode="fixed" data-i18n="mode.fixed">固定尺寸</button></div>
+            <div id="ratioSettings"><h3 class="minor-title" data-i18n="screenshot.ratio">预设比例</h3><div class="choice-grid" id="ratios"></div><div class="custom-ratio-control" id="shotCustomRatioControl" hidden><label for="shotCustomRatio" data-i18n="ratio.custom">自定义</label><div class="custom-ratio-row"><input id="shotCustomRatio" data-placeholder="ratio.placeholder" placeholder="例如 5:4"><button type="button" class="secondary compact" id="applyShotCustomRatio" data-i18n="ratio.apply">应用比例</button></div></div></div>
+            <div class="form" id="fixedSettings"><label class="field"><span data-i18n="screenshot.width">固定宽度（px / in / cm / mm）</span><input id="fixedW"></label><label class="field"><span data-i18n="screenshot.height">固定高度（px / in / cm / mm）</span><input id="fixedH"></label></div>
+            <div class="form one-row"><label class="field"><span data-i18n="screenshot.format">图片格式</span><select id="shotFormat"><option value="png">PNG</option><option value="jpg">JPG</option><option value="bmp">BMP</option></select></label></div>
+            <div class="field local-save-field"><span data-i18n="screenshot.directory">本地保存路径</span><div class="directory-row"><input id="shotSaveDir" readonly><button class="secondary compact" id="chooseShotDir"><span data-icon="folder"></span><span data-i18n="screenshot.chooseDirectory">选择路径</span></button></div></div>
+            <h3 class="minor-title screenshot-other-title" data-i18n="screenshot.other">其他设置</h3>
+            <div class="row switches"><label class="switch"><input id="autoSave" type="checkbox"><span class="switch-track"><i></i></span><span data-i18n="screenshot.autoSave">自动保存本地</span></label><label class="switch"><input id="autoClip" type="checkbox"><span class="switch-track"><i></i></span><span data-i18n="screenshot.autoClip">自动复制到剪贴板</span></label></div>
+            <button class="primary" id="saveShot"><span data-icon="check"></span><span data-i18n="common.apply">应用截图参数</span></button>
+          </div>
+        </section>
+
+        <section class="panel" id="gif">
+          <p class="sub" data-i18n="gif.subtitle">录制参数会同步到浮层和设置页面。</p>
+          <div class="box">
+            <div class="gif-layout">
+              <div class="gif-params">
+                <h3 data-i18n="gif.fps">帧率选择</h3><div class="toolbar" id="fps"></div>
+                <h3 data-i18n="gif.format">输出格式</h3><div class="toolbar" id="formats"></div>
+                <h3 data-i18n="gif.mode">选区模式</h3><div class="segmented" id="gifModes"></div>
+                <div id="gifRatioSettings"><h3 data-i18n="gif.ratio">选区比例</h3><div class="toolbar" id="gifRatios"></div><div class="custom-ratio-control" id="gifCustomRatioControl" hidden><label for="gifCustomRatio" data-i18n="gif.other">其他</label><div class="custom-ratio-row"><input id="gifCustomRatio" data-placeholder="ratio.placeholder" placeholder="例如 5:4"><button type="button" class="secondary compact" id="applyGifCustomRatio" data-i18n="ratio.apply">应用比例</button></div></div></div>
+                <div class="form" id="gifFixedSettings"><label class="field"><span data-i18n="gif.width">固定宽度（px / in / cm / mm）</span><input id="gifFixedW"></label><label class="field"><span data-i18n="gif.height">固定高度（px / in / cm / mm）</span><input id="gifFixedH"></label></div>
+                <div class="field local-save-field"><span data-i18n="gif.directory">录制保存路径</span><div class="directory-row"><input id="gifSaveDir" readonly><button class="secondary compact" id="chooseGifDir"><span data-icon="folder"></span><span data-i18n="gif.chooseDirectory">选择路径</span></button></div><small data-i18n="gif.sameDirectory">与截图使用同一个保存目录</small></div>
+              </div>
+              <div class="gif-actions-panel">
+                <div class="gif-flow-title" data-i18n="gif.flowTitle">录制流程</div>
+                <div class="gif-timeline"><span class="is-active"><i></i><b data-i18n="gif.flow.select">框选区域</b></span><span><i></i><b data-i18n="gif.flow.start">按下开始键</b></span><span><i></i><b data-i18n="gif.flow.countdown">3·2·1 倒计时</b></span><span><i></i><b data-i18n="gif.flow.record">录制中</b></span></div>
+                <div class="gif-shortcut-row"><span class="chip" id="gifKeys">回车开始 · F9 结束</span><button class="secondary compact gif-settings-link" data-go="settings"><span data-icon="settings"></span><span data-i18n="gif.configureShortcuts">设置快捷键</span></button></div>
+                <button class="primary yellow gif-start-button" id="launchGif"><span data-icon="record"></span><span data-i18n="gif.start">开始录制</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="box video-plugin-card" id="videoPluginCard">
+            <div class="video-plugin-head"><div><h3 data-i18n="video.title">视频录制（插件）</h3><p data-i18n="video.subtitle">MP4 录制使用独立 FFmpeg 插件，不增加核心程序体积。</p></div><span class="chip" id="videoPluginState"></span></div>
+            <div class="row video-plugin-actions"><button type="button" class="secondary" id="checkVideoPlugin"><span data-icon="refresh"></span><span data-i18n="video.check">刷新检测</span></button><button type="button" class="primary yellow" id="launchVideo" disabled><span data-icon="record"></span><span data-i18n="video.start">开始视频录制</span></button><span id="videoPluginDetail" class="notice"></span></div>
+          </div>
+        </section>
+
+        <section class="panel" id="gallery">
+          <p class="sub" data-i18n="gallery.subtitle">支持 PNG、JPG、BMP、GIF、APNG 与 Animated WebP；方向键可切换图片。</p>
+          <div class="toolbar gallery-toolbar"><button data-filter="all" data-i18n="gallery.all">全部</button><button data-filter="image" data-i18n="gallery.images">图片</button><button data-filter="motion" data-i18n="gallery.motion">动图</button><button data-filter="video" data-i18n="gallery.videos">视频</button><button class="secondary open-folder" id="openFolder"><span data-icon="folder"></span><span data-i18n="gallery.openFolder">打开目录</span></button></div>
+          <div id="galleryGrid" class="gallery-grid"></div>
+        </section>
+
+        <section class="panel" id="crop">
+          <p class="sub" data-i18n="crop.subtitle">选择或拖入图片，实时调整裁剪区域并保存。</p>
+          <div class="box crop-box" id="cropBox">
+            <div class="crop-toolbar-row">
+              <div class="segmented crop-modes"><button type="button" data-crop-mode="free" data-i18n="crop.freeDraw">自由绘制</button><button type="button" data-crop-mode="ratio" data-i18n="crop.fixedRatio">固定比例</button><button type="button" data-crop-mode="fixed" data-i18n="crop.fixedSize">固定大小</button></div>
+              <div class="crop-control" id="cropRatioControl"><label for="cropRatioSelect" data-i18n="crop.ratio">比例</label><select id="cropRatioSelect"><option>1:1</option><option>1:2</option><option>2:1</option><option>2:3</option><option>3:2</option><option>3:4</option><option>4:3</option><option>16:6</option><option>9:16</option><option>16:9</option><option>9:18</option><option>18:9</option><option>21:9</option><option value="__custom__" data-i18n="ratio.custom">自定义</option></select><div class="custom-ratio-control" id="cropCustomRatioControl" hidden><input id="cropCustomRatio" data-placeholder="ratio.placeholder" placeholder="例如 5:4"><button type="button" class="secondary compact" id="applyCropCustomRatio" data-i18n="ratio.apply">应用比例</button></div></div>
+              <div class="crop-control crop-fixed-control" id="cropFixedControl"><label data-i18n="crop.size">尺寸</label><div><input id="cropFixedW" value="400px" aria-label="width"><span>×</span><input id="cropFixedH" value="320px" aria-label="height"></div></div>
+              <button class="secondary crop-choose" id="chooseCrop"><span data-icon="folder"></span><span data-i18n="crop.open">选择文件</span></button><button class="secondary compact crop-clear" id="clearCrop" hidden><span data-icon="close"></span><span data-i18n="crop.clear">清空图片</span></button>
+            </div>
+            <input id="cropFile" type="file" accept="image/*,.ico,.tif,.tiff" hidden>
+            <div class="crop-empty" id="cropEmpty">
+              <div class="crop-empty-icon"><span data-icon="crop"></span></div>
+              <strong data-i18n="crop.emptyTitle">拖放图片或点击选择文件开始</strong>
+              <p data-i18n="crop.emptyDesc">支持 PNG、JPG、BMP 等常见格式，拖动鼠标框选裁剪区域</p>
+            </div>
+            <div class="crop-preview-row"><canvas id="cropCanvas" width="800" height="420"></canvas></div>
+            <div id="cropHint" class="chip crop-hint" data-i18n="crop.hint">拖动画框移动选区 · 拖动四角调整大小</div>
+            <div id="cropInfo" class="media-info"></div>
+            <div class="box motion-photo-export" id="motionPhotoExport">
+              <div class="motion-photo-head"><div><h3 data-i18n="motion.title">Android Motion Photo</h3><p data-i18n="motion.subtitle">使用当前裁剪区域和一个 MP4 视频导出单文件动态照片。</p></div><span class="chip" id="motionPluginState"></span></div>
+              <div class="motion-requirements"><strong data-i18n="motion.requirementsTitle">合成要求</strong><ul><li data-i18n="motion.requirementImage">图片：使用当前裁剪选区，软件会自动转换为 JPEG；请先完成框选。</li><li data-i18n="motion.requirementVideo">视频：必须是有效 MP4（包含 ftyp 文件头）；本软件录制的 MP4 可直接使用。</li><li data-i18n="motion.requirementRecommend">建议：图片与视频使用相近比例，视频为 1–15 秒；合成不会重新编码视频。</li></ul></div>
+              <div class="motion-sources"><div class="motion-source"><span class="motion-source-label" data-i18n="motion.imageSource">静态图片</span><span id="motionPhotoImage" class="motion-file" data-i18n="motion.noImage">请先选择图片</span></div><div class="motion-source"><span class="motion-source-label" data-i18n="motion.videoSource">MP4 视频</span><span id="motionPhotoVideo" class="motion-file" data-i18n="motion.noVideo">尚未选择 MP4 视频</span><button type="button" class="secondary compact" id="chooseMotionVideo"><span data-icon="folder"></span><span data-i18n="motion.chooseVideo">选择 MP4</span></button></div></div>
+              <div class="motion-export-options">
+                <label><span>兼容配置</span><select id="motionProfile"><option value="google">Google 通用</option><option value="xiaomi">小米兼容（实验性）</option></select></label>
+                <label><span>视频片段</span><select id="motionClipMode"><option value="full">完整视频（不剪辑）</option><option value="social">社交 ≤5 秒（4.8 秒）</option><option value="custom">自定义片段</option></select></label>
+              </div>
+              <div class="motion-video-tools" id="motionVideoTools" hidden>
+                <div class="motion-video-meta" id="motionVideoMeta">选择 MP4 后显示时长与时间轴</div>
+                <div class="motion-clip-controls"><label><span>起始秒数</span><input id="motionClipStart" type="number" min="0" step="0.1" value="0"></label><label><span>导出时长（秒）</span><input id="motionClipDuration" type="number" min="0.1" max="15" step="0.1" value="4.8"></label></div>
+                <div class="motion-thumbnails" id="motionThumbnails" aria-label="视频时间轴缩略图"></div>
+                <small class="motion-timeline-hint">点击缩略图可在对应时间点预览完整视频，并可设为起始位置；导出时才调用 FFmpeg 裁切。</small>
+              </div>
+              <div class="row motion-photo-actions"><button type="button" class="primary" id="exportMotionPhoto"><span data-icon="save"></span><span data-i18n="motion.export">导出 Motion Photo</span></button><button type="button" class="secondary" id="openMotionOutput"><span data-icon="folder"></span><span data-i18n="motion.openOutput">打开导出目录</span></button></div><div id="motionPhotoStatus" class="notice motion-photo-status" aria-live="polite"></div>
+            </div>
+            <div class="row crop-actions"><label class="switch"><input id="overwriteCrop" type="checkbox"><span class="switch-track"><i></i></span><span data-i18n="crop.overwrite">替换原图</span></label><button class="primary" id="saveCrop"><span data-icon="crop"></span><span data-i18n="crop.save">裁剪并保存</span></button></div><div id="cropStatus" class="notice crop-status"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="settings">
+          <p class="sub" data-i18n="settings.subtitle">快捷键单独保存，其他选项直接保存到配置中心。</p>
+          <div class="form settings-form">
+            <div class="settings-group-label"><strong data-i18n="settings.shortcutGroup">快捷键设置</strong><small data-i18n="settings.shortcutSaveHint">保存快捷键后立即生效</small></div>
+            <label class="field"><span data-i18n="settings.captureKey">截图快捷键</span><input class="keycapture" id="hotkey" readonly><small class="shortcut-status"></small></label>
+            <label class="field"><span data-i18n="settings.recordStart">录制开始快捷键</span><input class="keycapture" id="recordStart" readonly><small class="shortcut-status"></small></label>
+            <label class="field"><span data-i18n="settings.recordStop">录制结束快捷键</span><input class="keycapture" id="recordStop" readonly><small class="shortcut-status"></small></label>
+            <div class="settings-group-label"><strong data-i18n="settings.otherGroup">录制与应用设置</strong><small data-i18n="settings.otherSaveHint">其他选项直接写入配置</small></div>
+            <label class="field"><span data-i18n="settings.fps">录制 FPS</span><select id="settingFps"><option>5</option><option>8</option><option>10</option><option>12</option><option>15</option><option>20</option><option>24</option><option>30</option></select></label>
+            <label class="field"><span data-i18n="settings.format">录制格式</span><select id="settingFormat"><option value="gif">GIF</option><option value="apng">APNG</option><option value="webp">Animated WebP</option></select></label>
+            <label class="field"><span data-i18n="settings.directory">保存目录</span><div class="directory-row"><input id="saveDir" readonly><button class="secondary compact" id="chooseSaveDir"><span data-icon="folder"></span><span data-i18n="settings.chooseDirectory">选择目录</span></button></div></label>
+            <label class="field"><span data-i18n="settings.theme">界面主题</span><select id="themeMode"><option value="light" data-i18n="theme.light">亮色</option><option value="dark" data-i18n="theme.dark">暗色</option></select></label>
+            <label class="field"><span data-i18n="settings.language">界面语言</span><select id="languageMode"><option value="zh" data-i18n="language.zh">中文</option><option value="en" data-i18n="language.en">English</option></select></label>
+          </div>
+          <div class="row settings-actions"><button class="primary" id="saveShortcuts"><span data-icon="check"></span><span data-i18n="settings.saveShortcuts">保存快捷键</span></button><button class="secondary" id="saveOther"><span data-icon="save"></span><span data-i18n="settings.saveOther">保存其他设置</span></button><span class="notice" id="saved"></span></div>
+          <div class="box plugin-section">
+            <div class="plugin-section-head"><div><h3 data-i18n="plugins.title">可选插件</h3><p data-i18n="plugins.subtitle">插件独立安装；核心程序不包含 FFmpeg 或视频组件。</p></div></div>
+            <div class="plugin-directory-row"><code class="plugin-directory" id="pluginDirectory"></code><div class="directory-actions"><button class="secondary compact" id="installPluginPackage"><span data-icon="download"></span><span data-i18n="plugins.installPackage">安装插件包</span></button><button class="secondary compact" id="choosePluginDirectory"><span data-icon="folder"></span><span data-i18n="plugins.chooseDirectory">选择目录</span></button><button class="secondary compact" id="openPluginDirectory"><span data-icon="folder"></span><span data-i18n="plugins.openDirectory">打开目录</span></button><button class="secondary compact" id="resetPluginDirectory"><span data-icon="refresh"></span><span data-i18n="plugins.useDefault">恢复默认</span></button></div></div>
+            <div class="plugin-directory-meta"><span class="notice" data-i18n="plugins.directoryHint">可选择软件安装目录下的 plugins；目录必须可写。</span></div>
+            <div class="plugin-list" id="pluginList"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="about">
+          <p class="sub" data-i18n="about.subtitle">轻量 · 高效 · Windows 优先支持</p>
+          <div class="box about-identity">
+            <div class="about-identity-mark" data-icon="brand"></div>
+            <strong data-i18n="about.productName">XAOCEN ImgTor</strong>
+            <small data-i18n="about.chineseName">晓枨图像工具</small>
+            <p class="about-slogan" data-i18n="about.slogan">轻量 · 高效 · 专注于图像效率</p>
+            <span class="about-version" data-version>v4.9.0</span>
+            <p class="about-description"><span data-i18n="about.descriptionLine1">用于快速截图、动态图像录制、图片浏览、裁剪处理以及多格式导出。</span><span data-i18n="about.descriptionLine2">专注于简洁、高效的操作体验，让每一次图像处理更加流畅。</span></p>
+            <div class="about-copyright"><span data-i18n="about.developer">开发：XAOCEN STUDIO</span><span data-i18n="about.rights">© 2026 XAOCEN · All Rights Reserved.</span><a href="https://github.com/siycaoxgh/xaocen-imgtor" target="_blank" rel="noopener">GitHub：xaocen-imgtor</a></div>
+          </div>
+          <div class="stats about-stats-row">
+            <div class="box stat"><strong data-version>v4.9.0</strong><span data-i18n="about.version">版本</span></div>
+            <div class="box stat"><strong id="aboutFeatureCount">—</strong><span data-i18n="about.features">已完成功能项</span></div>
+            <div class="box stat"><strong id="aboutFileCount">—</strong><span data-i18n="about.sourceFiles">项目文件</span></div>
+            <div class="box stat"><strong id="aboutPendingCount">—</strong><span data-i18n="about.pending">待定功能</span></div>
+          </div>
+          <div class="box about-feature-box">
+            <h3 data-i18n="about.doneTitle">已完成功能</h3>
+            <ul class="about-feature-list">
+              <li data-i18n="about.done.core">全局快捷键截图（比例约束 / 固定尺寸 / 自由大小）</li>
+              <li data-i18n="about.done.overlay">半透明遮罩 + 十字参考线 + 四角标记 + 框内拖拽微调</li>
+              <li data-i18n="about.done.format">自动保存 PNG/JPG/BMP + 自动剪贴板，截图超时兜底</li>
+              <li data-i18n="about.done.gif">拖框选区 + Enter 开始 + 3/2/1 倒计时，GIF / APNG / WebP 输出</li>
+              <li data-i18n="about.done.gallery">缩略图网格 + 原图预览 + 键盘导航 + 动图播放/暂停 + 删除</li>
+              <li data-i18n="about.done.crop">页面内选择或拖入图片（拖入仅可另存）+ 自由绘制 / 固定比例 / 固定尺寸裁剪</li>
+              <li data-i18n="about.done.settings">GUI 设置面板 + 实时快捷键录入 + 目录选择器 + 中英双语</li>
+              <li data-i18n="about.done.theme">亮色 / 暗色主题 + 系统托盘 + 单实例锁 + 原生控件圆角</li>
+              <li data-i18n="about.done.plugins">可选 MP4 录制与 Android Motion Photo 插件，保持核心程序轻量</li>
+            </ul>
+          </div>
+          <div class="box about-feature-box about-pending-box">
+            <h3 data-i18n="about.pendingTitle">待定 / 后续</h3>
+            <ul class="about-feature-list pending-list">
+              <li data-i18n="about.pending.mac">macOS 适配 — 代码已留分支，需实机验证</li>
+              <li data-i18n="about.pending.exe">PyInstaller 打包 exe — 预估 45-50 MB</li>
+              <li data-i18n="about.pending.motion">Motion Photo 兼容性 — 小米等 OEM 相册仍需实机验证</li>
+              <li data-i18n="about.pending.integration">官方插件签名与来源校验 — 当前已提供完整性哈希校验</li>
+            </ul>
+          </div>
+          <div class="box about-feature-box about-excluded-box">
+            <h3 data-i18n="about.excludedTitle">已排除</h3>
+            <ul class="about-feature-list excluded-list">
+              <li data-i18n="about.excluded.live">iOS Live Photo — Apple 私有格式，Windows 无法生成</li>
+            </ul>
+          </div>
+          <div class="box support-note"><h3 data-i18n="about.supportTitle">平台支持</h3><p data-i18n="about.support">Windows 优先支持；macOS / Linux 已预留代码分支，尚未完成实机验证。</p></div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <div class="app-status" id="appStatus" role="status" aria-live="polite" hidden>
+    <span class="app-status-dot" aria-hidden="true"></span>
+    <span id="appStatusText">准备就绪</span>
+  </div>
+  <script src="icons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
