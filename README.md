@@ -47,6 +47,7 @@ python -m pip install -r requirements.txt
 - [更新日志](CHANGELOG.md)：记录版本、功能、修复和已知限制。
 - [平台支持说明](docs/PLATFORM_SUPPORT.md)：Windows、macOS 和 Linux 的支持范围。
 - [插件分发说明](docs/PLUGIN_PACKAGES.md)：`.xaocen-plugin` 格式和完整性校验。
+- [FFmpeg 安装说明](docs/FFMPEG_SETUP.md)：视频插件的外部 FFmpeg 配置。
 - [Apache-2.0 许可证](LICENSE)
 - [归档仓库](https://github.com/siycaoxgh/xaocen-imgtor-archive)：旧版入口、旧 Tk 界面和测试历史。
 

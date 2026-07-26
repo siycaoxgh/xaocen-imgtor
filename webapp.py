@@ -4,14 +4,21 @@ import base64, binascii, heapq, io, mimetypes, os, platform, re, subprocess, sys
 from collections import OrderedDict
 from pathlib import Path
 
-from config_manager import DEFAULT_CONFIG, config_lock_error_message, load_config, update_config
-from ratio_presets import RATIO_PRESETS
-from presets import GIF_FORMATS, GIF_FPS, GIF_MODES, IMAGE_FORMATS, SELECTION_MODES
-from plugin_manager import (discover_plugins, ensure_plugin_root, install_plugin_package,
-                            plugin_root, validate_plugin_root)
-from plugin_host import run_plugin
-from runtime_status import read_status
-from shortcuts import validate_all
+_SRC_ROOT = Path(__file__).resolve().parent / 'src'
+if _SRC_ROOT.is_dir() and str(_SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(_SRC_ROOT))
+
+from xaocen_imgtor.config_manager import (DEFAULT_CONFIG, config_lock_error_message,
+                                           load_config, update_config)
+from xaocen_imgtor.ratio_presets import RATIO_PRESETS
+from xaocen_imgtor.presets import GIF_FORMATS, GIF_FPS, GIF_MODES, IMAGE_FORMATS, SELECTION_MODES
+from xaocen_imgtor.plugin_manager import (discover_plugins, ensure_plugin_root,
+                                           install_plugin_package, plugin_root,
+                                           validate_plugin_root)
+from xaocen_imgtor.plugin_host import run_plugin
+from xaocen_imgtor.runtime_status import read_status
+from xaocen_imgtor.shortcuts import validate_all
+from xaocen_imgtor.instance_lock import InstanceLock
 
 # In a PyInstaller build, UI assets and worker entry points are unpacked into
 # _MEIPASS.  Keep user data/plugins beside the executable instead of writing
@@ -20,7 +27,7 @@ BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent))
 APP_DIR = Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else BASE
 UI = BASE / 'ui' / 'index.html'
 ICON_PATH = BASE / 'xaocen-imgtor.ico'
-APP_TITLE = 'XAOCEN ImgTor v4.9.0'
+APP_TITLE = 'XAOCEN ImgTor v5.0.1'
 MAX_CROP_SOURCES = 256
 MAX_PREVIEW_EDGE = 2048
 MAX_IMAGE_PREVIEW_BYTES = 16 * 1024 * 1024
@@ -904,6 +911,9 @@ class API:
         # Gallery and crop are rendered inside the single web UI.
         files = {'screenshot': 'main.py', 'gif': 'gifrecorder_standalone.py',
                  'video': 'video_recorder_standalone.py'}
+        modules = {'screenshot': 'xaocen_imgtor.workers.screenshot',
+                   'gif': 'xaocen_imgtor.workers.gifrecorder',
+                   'video': 'xaocen_imgtor.workers.video'}
         if kind in files:
             # A GIF recorder is a one-shot selection session. Always replace an
             # older idle/hidden recorder so it reads the latest configuration.
@@ -916,9 +926,18 @@ class API:
                     command = [sys.executable, '--worker', kind]
                     workdir = APP_DIR
                 else:
-                    command = [sys.executable, str(BASE / files[kind])]
+                    command = [sys.executable, '-m', modules[kind]]
                     workdir = BASE
-                self.processes[kind] = subprocess.Popen(command, cwd=str(workdir))
+                popen_options = {'cwd': str(workdir)}
+                if not getattr(sys, 'frozen', False):
+                    child_env = os.environ.copy()
+                    child_env['PYTHONPATH'] = os.pathsep.join(
+                        item for item in (str(BASE / 'src'), child_env.get('PYTHONPATH', '')) if item
+                    )
+                    popen_options['env'] = child_env
+                if os.name == 'nt':
+                    popen_options['creationflags'] = subprocess.CREATE_NO_WINDOW
+                self.processes[kind] = subprocess.Popen(command, **popen_options)
         return True
 
     @staticmethod
@@ -960,7 +979,7 @@ class API:
                 process.wait(timeout=3)
         self.processes.clear()
 
-def main():
+def _run_main():
     try:
         import webview
     except ImportError:
@@ -977,7 +996,7 @@ def main():
     api._window = window
 
     try:
-        from tray import TrayController
+        from xaocen_imgtor.tray import TrayController
         tray_controller = TrayController(lambda: _show_main_window(APP_TITLE), api.restart_screenshot,
                                          lambda: _request_main_window_close(api, APP_TITLE, tray))
         tray = tray_controller if tray_controller.start() else None
@@ -999,6 +1018,19 @@ def main():
     api.close_processes()
     if tray:
         tray.stop()
+
+
+def main():
+    """Start one launcher instance and never create duplicate tray icons."""
+    lock_path = APP_DIR / 'archive' / 'runtime' / '.xaocen-app.lock'
+    app_lock = InstanceLock(lock_path)
+    if not app_lock.acquire():
+        print('[INFO] XAOCEN ImgTor is already running; ignoring duplicate launch.')
+        return
+    try:
+        _run_main()
+    finally:
+        app_lock.release()
 if __name__ == '__main__':
     # Frozen builds also host optional plugins through this same EXE.  The
     # plugin host passes ``-I <plugin.py> --request``; dispatch it directly to
@@ -1017,10 +1049,11 @@ if __name__ == '__main__':
                              if value == '--worker'), -1)
         if getattr(sys, 'frozen', False) and worker_index >= 0 and worker_index + 1 < len(sys.argv):
             import runpy
-            worker = {'screenshot': 'main.py', 'gif': 'gifrecorder_standalone.py',
-                      'video': 'video_recorder_standalone.py'}.get(sys.argv[worker_index + 1])
+            worker = {'screenshot': 'xaocen_imgtor.workers.screenshot',
+                      'gif': 'xaocen_imgtor.workers.gifrecorder',
+                      'video': 'xaocen_imgtor.workers.video'}.get(sys.argv[worker_index + 1])
             if worker:
-                runpy.run_path(str(BASE / worker), run_name='__main__')
+                runpy.run_module(worker, run_name='__main__')
             else:
                 raise SystemExit(2)
         else:

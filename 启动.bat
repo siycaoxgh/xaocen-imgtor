@@ -22,6 +22,7 @@ echo [INFO] Using %PYTHON%
 
 :: Keep generated Python bytecode out of the project tree; runtime files live in archive/runtime.
 set PYTHONDONTWRITEBYTECODE=1
+set PYTHONPATH=%~dp0src;%PYTHONPATH%
 
 :: Install deps
 %PYTHON% -c "import PIL, webview, pystray" >nul 2>&1
