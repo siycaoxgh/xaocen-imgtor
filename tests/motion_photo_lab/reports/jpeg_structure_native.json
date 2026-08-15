@@ -1,0 +1,153 @@
+{
+  "file": "C:\\Users\\TOM\\Downloads\\MVIMG_20260715_055104.jpg",
+  "size_bytes": 10876813,
+  "markers": [
+    {
+      "index": 0,
+      "marker": "SOI",
+      "offset": 0,
+      "length": 2,
+      "payload_length": 0,
+      "payload_type": ""
+    },
+    {
+      "index": 1,
+      "marker": "APP1",
+      "offset": 2,
+      "length": 6902,
+      "payload_length": 6898,
+      "payload_type": "Exif"
+    },
+    {
+      "index": 2,
+      "marker": "APP3",
+      "offset": 6904,
+      "length": 6162,
+      "payload_length": 6158,
+      "payload_type": ""
+    },
+    {
+      "index": 3,
+      "marker": "APP4",
+      "offset": 13066,
+      "length": 472,
+      "payload_length": 468,
+      "payload_type": ""
+    },
+    {
+      "index": 4,
+      "marker": "APP2",
+      "offset": 13538,
+      "length": 650,
+      "payload_length": 646,
+      "payload_type": "ICC Profile"
+    },
+    {
+      "index": 5,
+      "marker": "APP1",
+      "offset": 14188,
+      "length": 465,
+      "payload_length": 461,
+      "payload_type": "XMP"
+    },
+    {
+      "index": 6,
+      "marker": "DQT",
+      "offset": 14653,
+      "length": 134,
+      "payload_length": 130,
+      "payload_type": ""
+    },
+    {
+      "index": 7,
+      "marker": "SOF0 (baseline)",
+      "offset": 14787,
+      "length": 19,
+      "payload_length": 15,
+      "payload_type": "",
+      "components": 3,
+      "sampling_factors": [
+        {
+          "id": 1,
+          "h": 2,
+          "v": 2
+        },
+        {
+          "id": 2,
+          "h": 1,
+          "v": 1
+        },
+        {
+          "id": 3,
+          "h": 1,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "marker": "DHT",
+      "offset": 14806,
+      "length": 420,
+      "payload_length": 416,
+      "payload_type": ""
+    },
+    {
+      "index": 9,
+      "marker": "SOS",
+      "offset": 15226,
+      "length": 14,
+      "payload_length": 10,
+      "payload_type": ""
+    },
+    {
+      "index": 10,
+      "marker": "EOI",
+      "offset": 4572005,
+      "length": 2,
+      "payload_length": 0,
+      "payload_type": ""
+    }
+  ],
+  "encoding": {
+    "format": "JPEG",
+    "mode": "RGB",
+    "size": [
+      3472,
+      4624
+    ],
+    "progressive": false,
+    "jfif": false,
+    "jfif_version": null,
+    "jfif_unit": null,
+    "jfif_density": null,
+    "icc_profile_bytes": 632,
+    "adobe": null,
+    "quantization_tables": 2,
+    "exif_tags": {
+      "Make": "Xiaomi",
+      "Model": "Redmi K60",
+      "Software": null,
+      "DateTime": "2026:07:15 05:51:04",
+      "Orientation": 0
+    },
+    "components": 3,
+    "sampling_factors": [
+      {
+        "id": 1,
+        "h": 2,
+        "v": 2
+      },
+      {
+        "id": 2,
+        "h": 1,
+        "v": 1
+      },
+      {
+        "id": 3,
+        "h": 1,
+        "v": 1
+      }
+    ]
+  }
+}

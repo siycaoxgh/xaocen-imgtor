@@ -25,7 +25,7 @@
         <h1 id="pageTitle" data-panel-title>启动器</h1>
         <div class="top-status">
           <span class="badge hotkey-badge" id="hotkeyBadge">Ctrl + Shift + X</span>
-          <span class="badge version-badge" data-version>v4.9.0</span>
+          <span class="badge version-badge" data-version>v5.3.2</span>
         </div>
       </header>
 
@@ -110,11 +110,67 @@
         <section class="panel" id="crop">
           <p class="sub" data-i18n="crop.subtitle">选择或拖入图片，实时调整裁剪区域并保存。</p>
           <div class="box crop-box" id="cropBox">
+            <div class="crop-transform-row">
+              <span class="crop-transform-label" data-i18n="crop.processMode">处理模式</span>
+              <div class="segmented crop-transform-modes">
+                <button type="button" data-crop-transform="rect" data-i18n="crop.rectMode">矩形裁剪</button>
+                <button type="button" data-crop-transform="rounded" data-i18n="crop.roundedMode">圆角处理</button>
+              </div>
+            </div>
             <div class="crop-toolbar-row">
               <div class="segmented crop-modes"><button type="button" data-crop-mode="free" data-i18n="crop.freeDraw">自由绘制</button><button type="button" data-crop-mode="ratio" data-i18n="crop.fixedRatio">固定比例</button><button type="button" data-crop-mode="fixed" data-i18n="crop.fixedSize">固定大小</button></div>
               <div class="crop-control" id="cropRatioControl"><label for="cropRatioSelect" data-i18n="crop.ratio">比例</label><select id="cropRatioSelect"><option>1:1</option><option>1:2</option><option>2:1</option><option>2:3</option><option>3:2</option><option>3:4</option><option>4:3</option><option>16:6</option><option>9:16</option><option>16:9</option><option>9:18</option><option>18:9</option><option>21:9</option><option value="__custom__" data-i18n="ratio.custom">自定义</option></select><div class="custom-ratio-control" id="cropCustomRatioControl" hidden><input id="cropCustomRatio" data-placeholder="ratio.placeholder" placeholder="例如 5:4"><button type="button" class="secondary compact" id="applyCropCustomRatio" data-i18n="ratio.apply">应用比例</button></div></div>
               <div class="crop-control crop-fixed-control" id="cropFixedControl"><label data-i18n="crop.size">尺寸</label><div><input id="cropFixedW" value="400px" aria-label="width"><span>×</span><input id="cropFixedH" value="320px" aria-label="height"></div></div>
               <button class="secondary crop-choose" id="chooseCrop"><span data-icon="folder"></span><span data-i18n="crop.open">选择文件</span></button><button class="secondary compact crop-clear" id="clearCrop" hidden><span data-icon="close"></span><span data-i18n="crop.clear">清空图片</span></button>
+            </div>
+            <div class="rounded-controls" id="roundedControls" hidden>
+              <div class="rounded-preset-row">
+                <span class="crop-transform-label" data-i18n="crop.roundedPreset">圆角预设</span>
+                <div class="segmented rounded-presets">
+                  <button type="button" data-rounded-preset="none" data-i18n="crop.roundedNone">无圆角</button>
+                  <button type="button" data-rounded-preset="rounded" data-i18n="crop.roundedDefault">圆角</button>
+                </div>
+              </div>
+              <label class="rounded-radius-field" for="roundedRadius">
+                <span><span data-i18n="crop.roundedRadius">圆角半径</span><output id="roundedRadiusValue">12% · 0px</output></span>
+                <input id="roundedRadius" type="range" min="0" max="50" step="0.1" value="12">
+              </label>
+              <div class="rounded-format-row">
+                <span class="crop-transform-label" data-i18n="crop.roundedFormat">输出格式</span>
+                <div class="segmented rounded-formats">
+                  <button type="button" data-rounded-format="png">PNG</button>
+                  <button type="button" data-rounded-format="webp">WebP</button>
+                  <button type="button" data-rounded-format="ico">ICO</button>
+                </div>
+              </div>
+              <div class="ico-controls" id="icoControls" hidden>
+                <div class="ico-size-heading" data-i18n="crop.icoSizes">ICO 图标尺寸</div>
+                <div class="ico-size-modes">
+                  <label class="radio-option"><input type="radio" name="icoSizeMode" value="recommended" checked><span data-i18n="crop.icoRecommended">Windows 推荐</span></label>
+                  <label class="radio-option"><input type="radio" name="icoSizeMode" value="custom"><span data-i18n="crop.icoCustom">自定义</span></label>
+                </div>
+                <div class="ico-recommended-hint" id="icoRecommendedHint" data-i18n="crop.icoRecommendedHint">默认包含 16、24、32、48、256 px 五种尺寸。</div>
+                <div class="ico-custom-sizes" id="icoCustomSizes" hidden>
+                  <div class="ico-size-group"><span data-i18n="crop.icoBaseSizes">基础尺寸</span><div class="ico-size-grid">
+                    <label><input type="checkbox" data-ico-size value="16" checked>16 × 16</label>
+                    <label><input type="checkbox" data-ico-size value="24" checked>24 × 24</label>
+                    <label><input type="checkbox" data-ico-size value="32" checked>32 × 32</label>
+                    <label><input type="checkbox" data-ico-size value="48" checked>48 × 48</label>
+                    <label><input type="checkbox" data-ico-size value="256" checked>256 × 256</label>
+                  </div></div>
+                  <label class="ico-advanced-toggle"><input type="checkbox" id="icoAdvancedToggle"><span data-i18n="crop.icoAdvanced">展开高级尺寸</span></label>
+                  <div class="ico-size-group ico-advanced-sizes" id="icoAdvancedSizes" hidden><span data-i18n="crop.icoAdvancedSizes">高级尺寸</span><div class="ico-size-grid">
+                    <label><input type="checkbox" data-ico-size value="20">20 × 20</label>
+                    <label><input type="checkbox" data-ico-size value="40">40 × 40</label>
+                    <label><input type="checkbox" data-ico-size value="64">64 × 64</label>
+                    <label><input type="checkbox" data-ico-size value="96">96 × 96</label>
+                    <label><input type="checkbox" data-ico-size value="128">128 × 128</label>
+                  </div></div>
+                  <div class="ico-size-summary" id="icoSizeSummary"></div>
+                </div>
+              </div>
+              <div class="rounded-output-info" id="roundedOutputInfo"></div>
+              <div class="row rounded-actions"><button type="button" class="primary" id="saveRounded"><span data-icon="save"></span><span id="roundedSaveLabel" data-i18n="crop.roundedSave">导出圆角图片</span></button><button type="button" class="secondary" id="openRoundedFolder"><span data-icon="folder"></span><span data-i18n="motion.openOutput">打开保存目录</span></button></div>
             </div>
             <input id="cropFile" type="file" accept="image/*,.ico,.tif,.tiff" hidden>
             <div class="crop-empty" id="cropEmpty">
@@ -158,6 +214,7 @@
             <label class="field"><span data-i18n="settings.directory">保存目录</span><div class="directory-row"><input id="saveDir" readonly><button class="secondary compact" id="chooseSaveDir"><span data-icon="folder"></span><span data-i18n="settings.chooseDirectory">选择目录</span></button></div></label>
             <label class="field"><span data-i18n="settings.theme">界面主题</span><select id="themeMode"><option value="light" data-i18n="theme.light">亮色</option><option value="dark" data-i18n="theme.dark">暗色</option></select></label>
             <label class="field"><span data-i18n="settings.language">界面语言</span><select id="languageMode"><option value="zh" data-i18n="language.zh">中文</option><option value="en" data-i18n="language.en">English</option></select></label>
+            <label class="field"><span data-i18n="settings.startup">开机自启动</span><span class="switch"><input id="startWithWindows" type="checkbox"><span class="switch-track"><i></i></span><span data-i18n="settings.startupToggle">登录 Windows 后自动启动</span></span><small data-i18n="settings.startupHint">保存其他设置后生效。</small></label>
           </div>
           <div class="row settings-actions"><button class="primary" id="saveShortcuts"><span data-icon="check"></span><span data-i18n="settings.saveShortcuts">保存快捷键</span></button><button class="secondary" id="saveOther"><span data-icon="save"></span><span data-i18n="settings.saveOther">保存其他设置</span></button><span class="notice" id="saved"></span></div>
           <div class="box plugin-section">
@@ -175,12 +232,12 @@
             <strong data-i18n="about.productName">XAOCEN ImgTor</strong>
             <small data-i18n="about.chineseName">晓枨图像工具</small>
             <p class="about-slogan" data-i18n="about.slogan">轻量 · 高效 · 专注于图像效率</p>
-            <span class="about-version" data-version>v4.9.0</span>
+            <span class="about-version" data-version>v5.3.2</span>
             <p class="about-description"><span data-i18n="about.descriptionLine1">用于快速截图、动态图像录制、图片浏览、裁剪处理以及多格式导出。</span><span data-i18n="about.descriptionLine2">专注于简洁、高效的操作体验，让每一次图像处理更加流畅。</span></p>
             <div class="about-copyright"><span data-i18n="about.developer">开发：XAOCEN STUDIO</span><span data-i18n="about.rights">© 2026 XAOCEN · All Rights Reserved.</span><a href="https://github.com/siycaoxgh/xaocen-imgtor" target="_blank" rel="noopener">GitHub：xaocen-imgtor</a></div>
           </div>
           <div class="stats about-stats-row">
-            <div class="box stat"><strong data-version>v4.9.0</strong><span data-i18n="about.version">版本</span></div>
+            <div class="box stat"><strong data-version>v5.3.2</strong><span data-i18n="about.version">版本</span></div>
             <div class="box stat"><strong id="aboutFeatureCount">—</strong><span data-i18n="about.features">已完成功能项</span></div>
             <div class="box stat"><strong id="aboutFileCount">—</strong><span data-i18n="about.sourceFiles">项目文件</span></div>
             <div class="box stat"><strong id="aboutPendingCount">—</strong><span data-i18n="about.pending">待定功能</span></div>
@@ -193,7 +250,7 @@
               <li data-i18n="about.done.format">自动保存 PNG/JPG/BMP + 自动剪贴板，截图超时兜底</li>
               <li data-i18n="about.done.gif">拖框选区 + Enter 开始 + 3/2/1 倒计时，GIF / APNG / WebP 输出</li>
               <li data-i18n="about.done.gallery">缩略图网格 + 原图预览 + 键盘导航 + 动图播放/暂停 + 删除</li>
-              <li data-i18n="about.done.crop">页面内选择或拖入图片（拖入仅可另存）+ 自由绘制 / 固定比例 / 固定尺寸裁剪</li>
+              <li data-i18n="about.done.crop">页面内选择或拖入图片（拖入仅可另存）+ 矩形裁剪（自由绘制 / 固定比例 / 固定尺寸）+ 圆角处理（静态 PNG/WebP）</li>
               <li data-i18n="about.done.settings">GUI 设置面板 + 实时快捷键录入 + 目录选择器 + 中英双语</li>
               <li data-i18n="about.done.theme">亮色 / 暗色主题 + 系统托盘 + 单实例锁 + 原生控件圆角</li>
               <li data-i18n="about.done.plugins">可选 MP4 录制与 Android Motion Photo 插件，保持核心程序轻量</li>

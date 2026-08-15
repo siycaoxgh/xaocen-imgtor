@@ -1,0 +1,350 @@
+{
+  "experiment": "presentation_timestamp",
+  "created_at": "2026-08-15T02:14:18.444065+00:00",
+  "source_sample": "C:\\Users\\TOM\\Downloads\\MVIMG_20260715_055104.jpg",
+  "ffprobe": {
+    "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\plugin_examples\\android_motion_photo\\ffprobe.exe",
+    "version": "ffprobe version 8.1.2-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+    "available": true
+  },
+  "extracted": {
+    "image": {
+      "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\extracted\\MVIMG_20260715_055104_primary.jpg",
+      "sha256": "52857cac35ddf969b3bfffb86e07313acc2b3134eefc6da37641a88b352e699c"
+    },
+    "video": {
+      "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\extracted\\MVIMG_20260715_055104_motion.mp4",
+      "sha256": "0f27990c57c46c87774c61915ed5c6e3be9b22be453fa9951bacba827f313040",
+      "length": 6304806,
+      "duration_seconds": 3.059789
+    }
+  },
+  "variants": {
+    "A": {
+      "changes": {
+        "GCamera:MicroVideoPresentationTimestampUs": 0
+      },
+      "local_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_20260715_055104_A.jpg",
+      "sha256": "3935a4291943f3f81a6cb16caa2bfd5d1862f4483ebec800f760dc296d54eec8",
+      "analysis": {
+        "motion_photo": true,
+        "valid": true,
+        "status": "valid",
+        "profile": "xiaomi",
+        "video_length": 6304806,
+        "errors": [],
+        "warnings": [],
+        "file": {
+          "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_20260715_055104_A.jpg",
+          "name": "MVIMG_20260715_055104_A.jpg",
+          "size_bytes": 10876982
+        },
+        "jpeg": {
+          "soi": true,
+          "eoi": true,
+          "valid": true,
+          "exif": {
+            "detected": true,
+            "Make": null,
+            "Model": null,
+            "Software": null,
+            "DateTime": null,
+            "Orientation": 0
+          },
+          "eoi_offset": 4572174,
+          "end_offset": 4572176
+        },
+        "xmp": {
+          "detected": true,
+          "namespaces": {
+            "x": "adobe:ns:meta/",
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "GCamera": "http://ns.google.com/photos/1.0/camera/"
+          },
+          "camera": {},
+          "legacy": {
+            "MicroVideo": 1,
+            "MicroVideoVersion": 1,
+            "MicroVideoOffset": 6304806,
+            "MicroVideoPresentationTimestampUs": 0
+          },
+          "container": {
+            "present": false,
+            "items": [],
+            "primary": null,
+            "motion_photo": null
+          }
+        },
+        "mp4": {
+          "offset": 4572176,
+          "declared_offset": 4572176,
+          "declared_length": 6304806,
+          "actual_length": 6304806,
+          "eof": true,
+          "trailing_bytes": 0,
+          "boxes": [
+            {
+              "type": "ftyp",
+              "offset": 4572176,
+              "size": 24,
+              "header_size": 8
+            },
+            {
+              "type": "moov",
+              "offset": 4572200,
+              "size": 2498,
+              "header_size": 8
+            },
+            {
+              "type": "free",
+              "offset": 4574698,
+              "size": 944,
+              "header_size": 8
+            },
+            {
+              "type": "mdat",
+              "offset": 4575642,
+              "size": 6301340,
+              "header_size": 16
+            }
+          ],
+          "box_types": [
+            "ftyp",
+            "moov",
+            "free",
+            "mdat"
+          ],
+          "ftyp": true,
+          "moov": true,
+          "mdat": true,
+          "video_tracks": 1,
+          "audio_tracks": 1,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "container_format": "mov,mp4,m4a,3gp,3g2,mj2",
+          "duration_seconds": 3.059789,
+          "video_resolution": [
+            1080,
+            1440
+          ],
+          "frame_rate": "30/1",
+          "pixel_format": "yuvj420p",
+          "audio_sample_rate": "44100",
+          "ffprobe": {
+            "available": true,
+            "ok": true,
+            "streams": [
+              {
+                "index": 0,
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1080,
+                "height": 1440,
+                "pix_fmt": "yuvj420p",
+                "r_frame_rate": "30/1"
+              },
+              {
+                "index": 1,
+                "codec_name": "aac",
+                "codec_type": "audio",
+                "sample_rate": "44100",
+                "r_frame_rate": "0/0"
+              }
+            ],
+            "format": {
+              "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+              "duration": "3.059789"
+            }
+          }
+        }
+      }
+    },
+    "B": {
+      "changes": {
+        "GCamera:MicroVideoPresentationTimestampUs": 1529894
+      },
+      "local_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_20260715_055104_B.jpg",
+      "sha256": "a8eea9ce4dbc8cc6397e2976df615ebc569597e76ce07e071dad3952438adb3f",
+      "analysis": {
+        "motion_photo": true,
+        "valid": true,
+        "status": "valid",
+        "profile": "xiaomi",
+        "video_length": 6304806,
+        "errors": [],
+        "warnings": [],
+        "file": {
+          "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_20260715_055104_B.jpg",
+          "name": "MVIMG_20260715_055104_B.jpg",
+          "size_bytes": 10876988
+        },
+        "jpeg": {
+          "soi": true,
+          "eoi": true,
+          "valid": true,
+          "exif": {
+            "detected": true,
+            "Make": null,
+            "Model": null,
+            "Software": null,
+            "DateTime": null,
+            "Orientation": 0
+          },
+          "eoi_offset": 4572180,
+          "end_offset": 4572182
+        },
+        "xmp": {
+          "detected": true,
+          "namespaces": {
+            "x": "adobe:ns:meta/",
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "GCamera": "http://ns.google.com/photos/1.0/camera/"
+          },
+          "camera": {},
+          "legacy": {
+            "MicroVideo": 1,
+            "MicroVideoVersion": 1,
+            "MicroVideoOffset": 6304806,
+            "MicroVideoPresentationTimestampUs": 1529894
+          },
+          "container": {
+            "present": false,
+            "items": [],
+            "primary": null,
+            "motion_photo": null
+          }
+        },
+        "mp4": {
+          "offset": 4572182,
+          "declared_offset": 4572182,
+          "declared_length": 6304806,
+          "actual_length": 6304806,
+          "eof": true,
+          "trailing_bytes": 0,
+          "boxes": [
+            {
+              "type": "ftyp",
+              "offset": 4572182,
+              "size": 24,
+              "header_size": 8
+            },
+            {
+              "type": "moov",
+              "offset": 4572206,
+              "size": 2498,
+              "header_size": 8
+            },
+            {
+              "type": "free",
+              "offset": 4574704,
+              "size": 944,
+              "header_size": 8
+            },
+            {
+              "type": "mdat",
+              "offset": 4575648,
+              "size": 6301340,
+              "header_size": 16
+            }
+          ],
+          "box_types": [
+            "ftyp",
+            "moov",
+            "free",
+            "mdat"
+          ],
+          "ftyp": true,
+          "moov": true,
+          "mdat": true,
+          "video_tracks": 1,
+          "audio_tracks": 1,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "container_format": "mov,mp4,m4a,3gp,3g2,mj2",
+          "duration_seconds": 3.059789,
+          "video_resolution": [
+            1080,
+            1440
+          ],
+          "frame_rate": "30/1",
+          "pixel_format": "yuvj420p",
+          "audio_sample_rate": "44100",
+          "ffprobe": {
+            "available": true,
+            "ok": true,
+            "streams": [
+              {
+                "index": 0,
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1080,
+                "height": 1440,
+                "pix_fmt": "yuvj420p",
+                "r_frame_rate": "30/1"
+              },
+              {
+                "index": 1,
+                "codec_name": "aac",
+                "codec_type": "audio",
+                "sample_rate": "44100",
+                "r_frame_rate": "0/0"
+              }
+            ],
+            "format": {
+              "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+              "duration": "3.059789"
+            }
+          }
+        }
+      }
+    }
+  },
+  "device": {
+    "serial": "ce8df63f",
+    "manufacturer": "Xiaomi",
+    "brand": "Redmi",
+    "model": "23013RK75C",
+    "device": "mondrian",
+    "android": "15",
+    "sdk": "35",
+    "incremental": "OS3.0.8.0.VMNCNXM",
+    "hyperos": "V816",
+    "miui": "816",
+    "build": "AQ3A.250226.002"
+  },
+  "remote_files": {
+    "A": {
+      "remote_file": "/sdcard/DCIM/Camera/MVIMG_20260715_055104_A.jpg",
+      "size": 10876982
+    },
+    "B": {
+      "remote_file": "/sdcard/DCIM/Camera/MVIMG_20260715_055104_B.jpg",
+      "size": 10876988
+    }
+  },
+  "hyperos_result": {
+    "reported_by_user": true,
+    "gallery": "Xiaomi system Gallery",
+    "visible": {
+      "A": true,
+      "B": true
+    },
+    "motion_badge": {
+      "A": false,
+      "B": false
+    },
+    "playable": {
+      "A": false,
+      "B": false
+    },
+    "audio": {
+      "A": false,
+      "B": false
+    },
+    "third_party": {
+      "WeChat": "recognized, playable, audio present",
+      "Xiaohongshu": "recognized, playable, audio present"
+    },
+    "google_photos": "not observed in the app during this test"
+  }
+}

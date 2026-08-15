@@ -1,13 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-APP_VERSION = '5.0.1'
+APP_VERSION = '5.3.2'
 
 
 a = Analysis(
     ['webapp.py'],
     pathex=['.', 'src'],
     binaries=[],
-    datas=[('ui', 'ui'), ('xaocen-imgtor.ico', '.')],
+    datas=[('ui', 'ui'), ('resources', 'resources')],
     # Worker entry points are bundled as data and executed through runpy, so
     # PyInstaller cannot discover their imports from webapp.py automatically.
     hiddenimports=[
@@ -21,7 +21,7 @@ a = Analysis(
         'xaocen_imgtor.plugin_packager', 'xaocen_imgtor.presets',
         'xaocen_imgtor.ratio_presets', 'xaocen_imgtor.rounded_controls',
         'xaocen_imgtor.runtime_status', 'xaocen_imgtor.screen_utils',
-        'xaocen_imgtor.shortcuts', 'xaocen_imgtor.tray',
+        'xaocen_imgtor.shortcuts', 'xaocen_imgtor.startup', 'xaocen_imgtor.tray',
         'xaocen_imgtor.video_plugin_runtime',
         'xaocen_imgtor.paths',
         'xaocen_imgtor.overlay', 'xaocen_imgtor.gifrecorder',
@@ -31,7 +31,7 @@ a = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=['numpy', 'matplotlib', 'pandas', 'scipy', 'pytest'],
     noarchive=False,
     optimize=0,
 )
@@ -56,5 +56,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['xaocen-imgtor.ico'],
+    icon=['resources/xaocen-imgtor.ico'],
 )

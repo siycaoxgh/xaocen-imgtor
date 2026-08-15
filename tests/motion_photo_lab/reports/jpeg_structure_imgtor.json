@@ -1,0 +1,161 @@
+{
+  "file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_EXIF_D_20260815.jpg",
+  "size_bytes": 10876988,
+  "markers": [
+    {
+      "index": 0,
+      "marker": "SOI",
+      "offset": 0,
+      "length": 2,
+      "payload_length": 0,
+      "payload_type": ""
+    },
+    {
+      "index": 1,
+      "marker": "APP1",
+      "offset": 2,
+      "length": 102,
+      "payload_length": 98,
+      "payload_type": "Exif"
+    },
+    {
+      "index": 2,
+      "marker": "APP1",
+      "offset": 104,
+      "length": 538,
+      "payload_length": 534,
+      "payload_type": "XMP"
+    },
+    {
+      "index": 3,
+      "marker": "APP1",
+      "offset": 642,
+      "length": 6902,
+      "payload_length": 6898,
+      "payload_type": "Exif"
+    },
+    {
+      "index": 4,
+      "marker": "APP3",
+      "offset": 7544,
+      "length": 6162,
+      "payload_length": 6158,
+      "payload_type": ""
+    },
+    {
+      "index": 5,
+      "marker": "APP4",
+      "offset": 13706,
+      "length": 472,
+      "payload_length": 468,
+      "payload_type": ""
+    },
+    {
+      "index": 6,
+      "marker": "APP2",
+      "offset": 14178,
+      "length": 650,
+      "payload_length": 646,
+      "payload_type": "ICC Profile"
+    },
+    {
+      "index": 7,
+      "marker": "DQT",
+      "offset": 14828,
+      "length": 134,
+      "payload_length": 130,
+      "payload_type": ""
+    },
+    {
+      "index": 8,
+      "marker": "SOF0 (baseline)",
+      "offset": 14962,
+      "length": 19,
+      "payload_length": 15,
+      "payload_type": "",
+      "components": 3,
+      "sampling_factors": [
+        {
+          "id": 1,
+          "h": 2,
+          "v": 2
+        },
+        {
+          "id": 2,
+          "h": 1,
+          "v": 1
+        },
+        {
+          "id": 3,
+          "h": 1,
+          "v": 1
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "marker": "DHT",
+      "offset": 14981,
+      "length": 420,
+      "payload_length": 416,
+      "payload_type": ""
+    },
+    {
+      "index": 10,
+      "marker": "SOS",
+      "offset": 15401,
+      "length": 14,
+      "payload_length": 10,
+      "payload_type": ""
+    },
+    {
+      "index": 11,
+      "marker": "EOI",
+      "offset": 4572180,
+      "length": 2,
+      "payload_length": 0,
+      "payload_type": ""
+    }
+  ],
+  "encoding": {
+    "format": "JPEG",
+    "mode": "RGB",
+    "size": [
+      3472,
+      4624
+    ],
+    "progressive": false,
+    "jfif": false,
+    "jfif_version": null,
+    "jfif_unit": null,
+    "jfif_density": null,
+    "icc_profile_bytes": 632,
+    "adobe": null,
+    "quantization_tables": 2,
+    "exif_tags": {
+      "Make": null,
+      "Model": null,
+      "Software": null,
+      "DateTime": null,
+      "Orientation": 0
+    },
+    "components": 3,
+    "sampling_factors": [
+      {
+        "id": 1,
+        "h": 2,
+        "v": 2
+      },
+      {
+        "id": 2,
+        "h": 1,
+        "v": 1
+      },
+      {
+        "id": 3,
+        "h": 1,
+        "v": 1
+      }
+    ]
+  }
+}

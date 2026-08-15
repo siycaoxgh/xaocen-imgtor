@@ -2,31 +2,58 @@ import base64
 import io
 import json
 import shutil
+import struct
 import tempfile
 import unittest
+import sys
 from unittest import mock
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
+
 from PIL import Image
 
-import config_manager
-import plugin_manager
-from plugin_host import run_plugin
-import runtime_status
+from xaocen_imgtor import config_manager, plugin_manager, runtime_status
+from xaocen_imgtor.plugin_host import run_plugin
 from helpers import canvas_rect_to_image
-from dimensions import parse_dimension
-from gifrecorder import (GIFRecorder, compute_constrained_size, max_record_frames,
-                         outside_border_segments, parse_ratio, selection_bbox)
-from overlay import compute_constrained_size as screenshot_size, image_for_save_format
-from shortcuts import to_pynput, to_tk_event, validate_all, validate_pair
+from xaocen_imgtor.dimensions import parse_dimension
+from xaocen_imgtor.gifrecorder import (GIFRecorder, compute_constrained_size, max_record_frames,
+                                       outside_border_segments, parse_ratio, selection_bbox)
+from xaocen_imgtor.overlay import compute_constrained_size as screenshot_size, image_for_save_format
+from xaocen_imgtor.shortcuts import to_pynput, to_tk_event, validate_all, validate_pair
+from xaocen_imgtor import startup
 from webapp import API, PENDING_ITEMS
-from ratio_presets import RATIO_PRESETS, is_valid_ratio
+from xaocen_imgtor.ratio_presets import RATIO_PRESETS, is_valid_ratio
 from plugin_examples.android_motion_photo.motion_photo import (
     MotionPhotoError, create_motion_photo, extract_motion_photo,
     inspect_motion_photo,
 )
 from plugin_examples.video_recorder_ffmpeg.video_recorder import process_request as video_plugin_request
-from video_plugin_runtime import build_gdigrab_command
+from xaocen_imgtor.video_plugin_runtime import build_gdigrab_command
+
+PACKAGE_DIR = Path(__file__).resolve().parents[1] / 'src' / 'xaocen_imgtor'
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+
+
+def _test_mp4() -> bytes:
+    """Small box-valid MP4 fixture for Motion Photo structural tests."""
+    def box(kind: bytes, payload: bytes) -> bytes:
+        return struct.pack('>I', len(payload) + 8) + kind + payload
+
+    ftyp = box(b'ftyp', b'isom\x00\x00\x02\x00isomiso2avc1')
+    moov = box(b'moov', b'trak\x00\x00\x00\x00hdlrvideavc1')
+    mdat = box(b'mdat', b'frame-data')
+    return ftyp + moov + mdat
+
+
+def _create_motion_sample(folder: Path, profile: str = 'google') -> tuple[Path, Path, Path]:
+    image = folder / f'{profile}_image.jpg'
+    video = folder / f'{profile}_clip.mp4'
+    output = folder / f'{profile}_MP.jpg'
+    Image.new('RGB', (32, 20), '#ffbd4a').save(image, format='JPEG')
+    video.write_bytes(_test_mp4())
+    create_motion_photo(image, video, output, profile=profile)
+    return image, video, output
 
 
 class ConfigTests(unittest.TestCase):
@@ -65,6 +92,9 @@ class ConfigTests(unittest.TestCase):
         config = config_manager.normalize_config({'default_mode': 'free'})
         self.assertEqual(config['default_mode'], 'free')
 
+    def test_startup_setting_defaults_to_disabled_and_is_boolean(self):
+        self.assertFalse(config_manager.normalize_config({})['start_with_windows'])
+        self.assertTrue(config_manager.normalize_config({'start_with_windows': 1})['start_with_windows'])
     def test_invalid_shortcut_pair_falls_back_to_safe_defaults(self):
         config = config_manager.normalize_config({
             'hotkey': 'ctrl+shift+g',
@@ -99,24 +129,24 @@ class ConfigTests(unittest.TestCase):
                 plugin_manager.PLUGIN_ROOT = original_root
 
     def test_native_toolbar_popup_contract(self):
-        controls = (Path(config_manager.BASE_DIR) / 'rounded_controls.py').read_text(encoding='utf-8')
+        controls = (PACKAGE_DIR / 'rounded_controls.py').read_text(encoding='utf-8')
         self.assertIn("return 'break'", controls)
         self.assertIn('popup.lift()', controls)
         self.assertNotIn("popup.bind('<FocusOut>'", controls)
         self.assertNotIn('popup.grab_set()', controls)
 
     def test_webview_window_reference_stays_private(self):
-        app = (Path(config_manager.BASE_DIR) / 'webapp.py').read_text(encoding='utf-8')
+        app = (PROJECT_DIR / 'webapp.py').read_text(encoding='utf-8')
         self.assertIn('self._window = None', app)
         self.assertIn('api._window = window', app)
         self.assertNotIn('api.window = window', app)
 
     def test_tray_icon_and_recording_border_use_distinct_semantic_colours(self):
-        from tray import make_icon
-        recorder = (Path(config_manager.BASE_DIR) / 'gifrecorder.py').read_text(encoding='utf-8')
-        tray = (Path(config_manager.BASE_DIR) / 'tray.py').read_text(encoding='utf-8')
+        from xaocen_imgtor.tray import make_icon
+        recorder = (PACKAGE_DIR / 'gifrecorder.py').read_text(encoding='utf-8')
+        tray = (PACKAGE_DIR / 'tray.py').read_text(encoding='utf-8')
         self.assertEqual(make_icon().size, (64, 64))
-        self.assertIn('from design_tokens import ACCENT_BLUE', recorder)
+        self.assertIn('from .design_tokens import ACCENT_BLUE', recorder)
         self.assertIn('fill=ACCENT_BLUE', recorder)
         self.assertIn('self.icon.run_detached(setup=self._show_icon)', tray)
         self.assertIn('icon.visible = True', tray)
@@ -128,6 +158,27 @@ class ConfigTests(unittest.TestCase):
         self.assertIn('isSupportedDropImage(file)', app)
         self.assertIn("id=\"cropBox\"", page)
         self.assertIn("id=\"appStatus\"", page)
+
+    def test_crop_mode_switch_contract_keeps_processing_and_crop_modes_separate(self):
+        app = (Path(config_manager.BASE_DIR) / 'ui' / 'app.js').read_text(encoding='utf-8')
+        page = (Path(config_manager.BASE_DIR) / 'ui' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn("processingMode:'crop'", app)
+        self.assertIn("cropMode:'free'", app)
+        self.assertIn('function setCropMode(mode)', app)
+        self.assertIn("c.cropMode=['free','ratio','fixed'].includes(mode)?mode:'free'", app)
+        self.assertIn('data-crop-mode="free"', page)
+        self.assertIn('data-crop-mode="ratio"', page)
+        self.assertIn('data-crop-mode="fixed"', page)
+
+    def test_rounded_ico_ui_contract_is_present(self):
+        app = (Path(config_manager.BASE_DIR) / 'ui' / 'app.js').read_text(encoding='utf-8')
+        page = (Path(config_manager.BASE_DIR) / 'ui' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('data-rounded-format="ico"', page)
+        self.assertIn('id="icoControls"', page)
+        self.assertIn('name="icoSizeMode"', page)
+        self.assertIn('data-ico-size', page)
+        self.assertIn('getIcoSizesForDisplay()', app)
+        self.assertIn('icoSizes', app)
 
     def test_native_runtime_status_is_reported_once(self):
         original_status_path = runtime_status.STATUS_PATH
@@ -248,6 +299,125 @@ class ConfigTests(unittest.TestCase):
 
 
 class CoreTests(unittest.TestCase):
+    def test_rounded_image_preserves_size_and_multiplies_existing_alpha(self):
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp) / 'source.png'
+            image = Image.new('RGBA', (10, 6), (68, 217, 230, 255))
+            image.putpixel((4, 3), (68, 217, 230, 96))
+            image.putpixel((5, 3), (68, 217, 230, 0))
+            image.save(source, format='PNG')
+
+            rounded, _info, radius_px, percent = API._rounded_image(source, 50)
+
+            self.assertEqual(rounded.size, (10, 6))
+            self.assertEqual(radius_px, round(6 * 50 / 100))
+            self.assertEqual(percent, 50.0)
+            self.assertEqual(rounded.getpixel((5, 3))[3], 0)
+            self.assertEqual(rounded.getpixel((4, 3))[3], 96)
+            self.assertEqual(rounded.getpixel((5, 2))[3], 255)
+            self.assertLess(rounded.getpixel((0, 0))[3], 255)
+
+    def test_rounded_image_uses_integer_short_edge_radius_for_small_images(self):
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp) / 'small.png'
+            Image.new('RGBA', (3, 5), '#44d9e6').save(source, format='PNG')
+
+            _rounded, _info, radius_px, _percent = API._rounded_image(source, 50)
+
+            self.assertEqual(radius_px, round(3 * 50 / 100))
+
+    def test_rounded_image_rejects_animation_with_specific_api_error(self):
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp) / 'animated.gif'
+            frames = [Image.new('RGBA', (12, 8), colour)
+                      for colour in ('#ffbd4a', '#2eb3ff')]
+            frames[0].save(source, format='GIF', save_all=True,
+                           append_images=frames[1:], duration=[80, 120], loop=0)
+            api = API()
+            api._crop_sources[str(source.resolve())] = None
+
+            result = api.save_rounded_image('', source.name, 12, 'png', str(source))
+
+            self.assertEqual(result, {'ok': False, 'error': 'rounded_animation_unsupported'})
+
+    def test_rounded_image_exports_same_size_png_and_webp(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            original_config = config_manager.CONFIG_PATH
+            source = folder / 'source.png'
+            image = Image.new('RGBA', (18, 11), (255, 189, 74, 255))
+            image.putpixel((1, 1), (255, 189, 74, 80))
+            image.save(source, format='PNG')
+            try:
+                config_manager.CONFIG_PATH = folder / 'config.json'
+                config_manager.save_config({'save_directory': str(folder / 'output')})
+                api = API()
+                api._crop_sources[str(source.resolve())] = None
+                for output_format in ('png', 'webp'):
+                    result = api.save_rounded_image('', source.name, 12, output_format,
+                                                    str(source))
+                    self.assertTrue(result['ok'])
+                    self.assertEqual((result['width'], result['height']), (18, 11))
+                    with Image.open(result['path']) as exported:
+                        self.assertEqual(exported.size, (18, 11))
+                        self.assertLess(exported.getpixel((0, 0))[3], 255)
+            finally:
+                config_manager.CONFIG_PATH = original_config
+
+    def test_rounded_image_exports_recommended_multisize_ico_with_alpha(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            original_config = config_manager.CONFIG_PATH
+            source = folder / 'source.png'
+            image = Image.new('RGBA', (32, 16), (255, 189, 74, 255))
+            image.putpixel((16, 8), (255, 189, 74, 0))
+            image.save(source, format='PNG')
+            try:
+                config_manager.CONFIG_PATH = folder / 'config.json'
+                config_manager.save_config({'save_directory': str(folder / 'output')})
+                api = API()
+                api._crop_sources[str(source.resolve())] = None
+
+                result = api.save_rounded_image('', source.name, 50, 'ico', str(source))
+
+                self.assertTrue(result['ok'])
+                self.assertEqual(result['sizes'], [16, 24, 32, 48, 256])
+                with Image.open(result['path']) as exported:
+                    self.assertEqual(set(exported.ico.sizes()),
+                                     {(16, 16), (24, 24), (32, 32), (48, 48), (256, 256)})
+                    for size in result['sizes']:
+                        with exported.ico.getimage((size, size)) as layer:
+                            self.assertEqual(layer.mode, 'RGBA')
+                            self.assertEqual(layer.size, (size, size))
+                            self.assertLess(layer.getpixel((size // 2, size // 2))[3], 255)
+            finally:
+                config_manager.CONFIG_PATH = original_config
+
+    def test_rounded_image_exports_custom_ico_sizes_and_avoids_overwrite(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            original_config = config_manager.CONFIG_PATH
+            source = folder / 'source.png'
+            Image.new('RGBA', (16, 16), '#44d9e6').save(source, format='PNG')
+            try:
+                config_manager.CONFIG_PATH = folder / 'config.json'
+                config_manager.save_config({'save_directory': str(folder / 'output')})
+                api = API()
+                api._crop_sources[str(source.resolve())] = None
+                first = api.save_rounded_image('', source.name, 12, 'ico', str(source), [20, 64, 128])
+                second = api.save_rounded_image('', source.name, 12, 'ico', str(source), [20, 64, 128])
+                self.assertEqual(first['sizes'], [20, 64, 128])
+                self.assertEqual(second['sizes'], [20, 64, 128])
+                self.assertNotEqual(first['path'], second['path'])
+                with Image.open(first['path']) as exported:
+                    self.assertEqual(set(exported.ico.sizes()), {(20, 20), (64, 64), (128, 128)})
+                self.assertEqual(api.save_rounded_image('', source.name, 12, 'ico', str(source), []),
+                                 {'ok': False, 'error': 'ico_sizes_empty'})
+                self.assertEqual(api.save_rounded_image('', source.name, 12, 'ico', str(source), [17]),
+                                 {'ok': False, 'error': 'ico_size_invalid'})
+            finally:
+                config_manager.CONFIG_PATH = original_config
+
     def test_android_motion_photo_plugin_round_trip_without_video_encoder(self):
         with tempfile.TemporaryDirectory() as temp:
             folder = Path(temp)
@@ -257,7 +427,7 @@ class CoreTests(unittest.TestCase):
             restored_still = folder / 'restored.jpg'
             restored_video = folder / 'restored.mp4'
             Image.new('RGB', (32, 20), '#ffbd4a').save(still, format='JPEG')
-            mp4 = b'\x00\x00\x00\x18ftypisom\x00\x00\x02\x00isomiso2avc1mp41payload'
+            mp4 = _test_mp4()
             video.write_bytes(mp4)
             create_motion_photo(still, video, output)
             info = inspect_motion_photo(output)
@@ -287,7 +457,7 @@ class CoreTests(unittest.TestCase):
             video = folder / 'clip.mp4'
             output = folder / 'still_MP.jpg'
             Image.new('RGB', (12, 10), '#2eb3ff').save(image, format='JPEG')
-            video.write_bytes(b'\x00\x00\x00\x18ftypisom\x00\x00\x02\x00isomiso2avc1mp41payload')
+            video.write_bytes(_test_mp4())
             shutil.copytree(config_manager.BASE_DIR / 'plugin_examples' / 'android_motion_photo',
                             root / 'android-motion-photo')
             try:
@@ -329,7 +499,7 @@ class CoreTests(unittest.TestCase):
             preview = io.BytesIO()
             Image.new('RGB', (20, 12), '#ffbd4a').save(preview, format='JPEG')
             data_url = 'data:image/jpeg;base64,' + base64.b64encode(preview.getvalue()).decode('ascii')
-            video.write_bytes(b'\x00\x00\x00\x18ftypisom\x00\x00\x02\x00isomiso2avc1mp41payload')
+            video.write_bytes(_test_mp4())
             shutil.copytree(config_manager.BASE_DIR / 'plugin_examples' / 'android_motion_photo',
                             root / 'android-motion-photo')
             try:
@@ -352,7 +522,7 @@ class CoreTests(unittest.TestCase):
             video = folder / 'clip.mp4'
             output = folder / 'xiaomi_MP.jpg'
             Image.new('RGB', (20, 12), '#ffbd4a').save(image, format='JPEG')
-            video.write_bytes(b'\x00\x00\x00\x18ftypisom\x00\x00\x02\x00isomiso2avc1mp41payload')
+            video.write_bytes(_test_mp4())
             create_motion_photo(image, video, output, profile='xiaomi')
             info = inspect_motion_photo(output)
             self.assertTrue(info['motion_photo'])
@@ -360,8 +530,125 @@ class CoreTests(unittest.TestCase):
             payload = output.read_bytes()
             self.assertIn(b'GCamera:MicroVideoOffset=', payload)
             self.assertIn(b'GCamera:MicroVideoPresentationTimestampUs="0"', payload)
-            self.assertEqual(b'Exif\x00\x00', payload[6:12])
-            self.assertLess(payload.find(b'Exif\x00\x00'), payload.find(b'GCamera:MicroVideoOffset'))
+            self.assertEqual(payload.count(b'Exif\x00\x00'), 0)
+            self.assertEqual(payload[2:4], b'\xff\xe1')
+            self.assertLess(payload.find(b'GCamera:MicroVideoOffset'), len(payload))
+
+    def test_motion_photo_xiaomi_profile_preserves_one_existing_exif(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            image = folder / 'image.jpg'
+            video = folder / 'clip.mp4'
+            output = folder / 'xiaomi_with_exif_MP.jpg'
+            exif = Image.Exif()
+            exif[0x010F] = 'Xiaomi'
+            exif[0x0110] = 'Redmi K60'
+            Image.new('RGB', (20, 12), '#ffbd4a').save(image, format='JPEG', exif=exif)
+            video.write_bytes(_test_mp4())
+            create_motion_photo(image, video, output, profile='xiaomi')
+            payload = output.read_bytes()
+            self.assertEqual(payload.count(b'Exif\x00\x00'), 1)
+            self.assertEqual(inspect_motion_photo(output)['jpeg']['exif']['Make'], 'Xiaomi')
+
+    def test_motion_photo_inspector_returns_structured_google_and_xiaomi_reports(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            _image, video, google = _create_motion_sample(folder, 'google')
+            _image, _video, xiaomi = _create_motion_sample(folder, 'xiaomi')
+            google_report = inspect_motion_photo(google)
+            xiaomi_report = inspect_motion_photo(xiaomi)
+            for report, profile in ((google_report, 'google'), (xiaomi_report, 'xiaomi')):
+                self.assertTrue(report['valid'])
+                self.assertTrue(report['motion_photo'])
+                self.assertEqual(report['profile'], profile)
+                self.assertEqual(report['mp4']['declared_length'], video.stat().st_size)
+                self.assertEqual(report['mp4']['actual_length'], video.stat().st_size)
+                self.assertTrue(report['mp4']['eof'])
+                self.assertTrue(report['mp4']['ftyp'])
+                self.assertTrue(report['mp4']['moov'])
+                self.assertTrue(report['mp4']['mdat'])
+                self.assertIn('namespaces', report['xmp'])
+            self.assertEqual(google_report['xmp']['camera']['MotionPhoto'], 1)
+            self.assertEqual(google_report['xmp']['camera']['MotionPhotoVersion'], 1)
+            self.assertEqual(google_report['xmp']['camera']['MotionPhotoPresentationTimestampUs'], -1)
+            self.assertTrue(google_report['xmp']['container']['present'])
+            self.assertEqual(xiaomi_report['xmp']['legacy']['MicroVideoOffset'], video.stat().st_size)
+            self.assertFalse(xiaomi_report['xmp']['container']['present'])
+
+    def test_motion_photo_inspector_rejects_mp4_trailing_bytes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            _image, _video, output = _create_motion_sample(folder)
+            output.write_bytes(output.read_bytes() + b'trailing')
+            report = inspect_motion_photo(output)
+            self.assertFalse(report['valid'])
+            self.assertFalse(report['mp4']['eof'])
+            self.assertEqual(report['mp4']['trailing_bytes'], len(b'trailing'))
+
+    def test_motion_photo_inspector_rejects_wrong_length(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            _image, video, output = _create_motion_sample(folder)
+            payload = output.read_bytes()
+            old = f'Item:Length="{video.stat().st_size}"'.encode()
+            new = f'Item:Length="{video.stat().st_size + 1}"'.encode()
+            self.assertIn(old, payload)
+            output.write_bytes(payload.replace(old, new, 1))
+            report = inspect_motion_photo(output)
+            self.assertFalse(report['valid'])
+            self.assertTrue(any('length' in error.lower() or 'tail' in error.lower()
+                                for error in report['errors']))
+
+    def test_motion_photo_inspector_rejects_missing_mp4_boxes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            _image, _video, output = _create_motion_sample(folder)
+            report = inspect_motion_photo(output)
+            payload = bytearray(output.read_bytes())
+            for box in report['mp4']['boxes']:
+                if box['type'] in {'moov', 'mdat'}:
+                    start = box['offset'] + 4
+                    payload[start:start + 4] = b'free'
+            output.write_bytes(payload)
+            report = inspect_motion_photo(output)
+            self.assertFalse(report['valid'])
+            self.assertFalse(report['mp4']['moov'])
+            self.assertFalse(report['mp4']['mdat'])
+
+    def test_motion_photo_inspector_rejects_missing_ftyp(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            _image, _video, output = _create_motion_sample(folder)
+            report = inspect_motion_photo(output)
+            payload = bytearray(output.read_bytes())
+            start = report['mp4']['offset'] + 4
+            payload[start:start + 4] = b'free'
+            output.write_bytes(payload)
+            report = inspect_motion_photo(output)
+            self.assertFalse(report['valid'])
+            self.assertFalse(report['mp4']['ftyp'])
+
+    def test_motion_photo_inspector_rejects_missing_google_xmp(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            _image, _video, output = _create_motion_sample(folder)
+            payload = output.read_bytes().replace(
+                b'Camera:MotionPhoto="1"', b'Camera:MotionPhoto="0"', 1)
+            output.write_bytes(payload)
+            report = inspect_motion_photo(output)
+            self.assertFalse(report['valid'])
+            self.assertFalse(report['motion_photo'])
+
+    def test_motion_photo_inspector_rejects_missing_xiaomi_offset(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            _image, _video, output = _create_motion_sample(folder, 'xiaomi')
+            payload = output.read_bytes().replace(
+                b'GCamera:MicroVideoOffset', b'GCamera:MicroVideoLength', 1)
+            output.write_bytes(payload)
+            report = inspect_motion_photo(output)
+            self.assertFalse(report['valid'])
+            self.assertEqual(report['video_length'], 0)
 
     def test_gallery_recognizes_embedded_motion_photo_video(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -370,7 +657,7 @@ class CoreTests(unittest.TestCase):
             video = folder / 'clip.mp4'
             output = folder / 'motion.jpg'
             Image.new('RGB', (20, 12), '#ffbd4a').save(image, format='JPEG')
-            video.write_bytes(b'\x00\x00\x00\x18ftypisom\x00\x00\x02\x00isomiso2avc1mp41payload')
+            video.write_bytes(_test_mp4())
             create_motion_photo(image, video, output, profile='xiaomi')
             info = API._motion_photo_info(output)
             self.assertTrue(info['motion_photo'])
@@ -414,8 +701,8 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(command[command.index('-framerate') + 1], '24')
 
     def test_video_recorder_reuses_dpi_aware_native_selection_engine(self):
-        standalone = (config_manager.BASE_DIR / 'video_recorder_standalone.py').read_text(encoding='utf-8')
-        recorder = (config_manager.BASE_DIR / 'gifrecorder.py').read_text(encoding='utf-8')
+        standalone = (PACKAGE_DIR / 'workers' / 'video.py').read_text(encoding='utf-8')
+        recorder = (PACKAGE_DIR / 'gifrecorder.py').read_text(encoding='utf-8')
         self.assertIn('set_process_dpi_awareness()', standalone)
         self.assertIn("record_kind='video'", standalone)
         self.assertIn('self._video_record_loop(record_bbox)', recorder)
@@ -626,6 +913,14 @@ class CoreTests(unittest.TestCase):
             self.assertTrue(
                 x2 <= 3 or x1 >= 103 or y2 <= 4 or y1 >= 84
             )
+
+
+class StartupTests(unittest.TestCase):
+    def test_source_startup_command_is_absolute_and_headless(self):
+        command = startup._command()
+        self.assertIn('webapp.py', command)
+        if sys.platform.startswith('win'):
+            self.assertIn('pythonw.exe', command.lower())
 
 
 if __name__ == '__main__':

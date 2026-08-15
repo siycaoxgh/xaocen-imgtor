@@ -1,0 +1,493 @@
+{
+  "experiment": "jpeg_xmp_structure",
+  "created_at": "2026-08-15T03:15:45.155578+00:00",
+  "source_sample": "C:\\Users\\TOM\\Downloads\\MVIMG_20260715_055104.jpg",
+  "ffprobe": {
+    "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\plugin_examples\\android_motion_photo\\ffprobe.exe",
+    "version": "ffprobe version 8.1.2-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+    "available": true
+  },
+  "control_report": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\reports\\experiment_002_control.json",
+  "G": {
+    "description": "reuses the unchanged NATIVE CONTROL file",
+    "local_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\adb\\MVIMG_NATIVE_CONTROL_20260815.jpg",
+    "analysis": {
+      "motion_photo": true,
+      "valid": true,
+      "status": "valid",
+      "profile": "xiaomi",
+      "video_length": 6304806,
+      "errors": [],
+      "warnings": [],
+      "file": {
+        "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\adb\\MVIMG_NATIVE_CONTROL_20260815.jpg",
+        "name": "MVIMG_NATIVE_CONTROL_20260815.jpg",
+        "size_bytes": 10876813
+      },
+      "jpeg": {
+        "soi": true,
+        "eoi": true,
+        "valid": true,
+        "exif": {
+          "detected": true,
+          "Make": "Xiaomi",
+          "Model": "Redmi K60",
+          "Software": null,
+          "DateTime": "2026:07:15 05:51:04",
+          "Orientation": 0
+        },
+        "eoi_offset": 4572005,
+        "end_offset": 4572007
+      },
+      "xmp": {
+        "detected": true,
+        "namespaces": {
+          "x": "adobe:ns:meta/",
+          "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+          "GCamera": "http://ns.google.com/photos/1.0/camera/"
+        },
+        "camera": {},
+        "legacy": {
+          "MicroVideo": 1,
+          "MicroVideoVersion": 1,
+          "MicroVideoOffset": 6304806,
+          "MicroVideoPresentationTimestampUs": 1796096
+        },
+        "container": {
+          "present": false,
+          "items": [],
+          "primary": null,
+          "motion_photo": null
+        }
+      },
+      "mp4": {
+        "offset": 4572007,
+        "declared_offset": 4572007,
+        "declared_length": 6304806,
+        "actual_length": 6304806,
+        "eof": true,
+        "trailing_bytes": 0,
+        "boxes": [
+          {
+            "type": "ftyp",
+            "offset": 4572007,
+            "size": 24,
+            "header_size": 8
+          },
+          {
+            "type": "moov",
+            "offset": 4572031,
+            "size": 2498,
+            "header_size": 8
+          },
+          {
+            "type": "free",
+            "offset": 4574529,
+            "size": 944,
+            "header_size": 8
+          },
+          {
+            "type": "mdat",
+            "offset": 4575473,
+            "size": 6301340,
+            "header_size": 16
+          }
+        ],
+        "box_types": [
+          "ftyp",
+          "moov",
+          "free",
+          "mdat"
+        ],
+        "ftyp": true,
+        "moov": true,
+        "mdat": true,
+        "video_tracks": 1,
+        "audio_tracks": 1,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "container_format": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 3.059789,
+        "video_resolution": [
+          1080,
+          1440
+        ],
+        "frame_rate": "30/1",
+        "pixel_format": "yuvj420p",
+        "audio_sample_rate": "44100",
+        "ffprobe": {
+          "available": true,
+          "ok": true,
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_type": "video",
+              "width": 1080,
+              "height": 1440,
+              "pix_fmt": "yuvj420p",
+              "r_frame_rate": "30/1"
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "r_frame_rate": "0/0"
+            }
+          ],
+          "format": {
+            "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+            "duration": "3.059789"
+          }
+        }
+      }
+    }
+  },
+  "xmp": {
+    "native": {
+      "payload_length": 461,
+      "packet_length": 432,
+      "xpacket_begin": null,
+      "xpacket_end": null,
+      "padding_bytes": null
+    },
+    "imgtor": {
+      "payload_length": 534,
+      "packet_length": 505,
+      "xpacket_begin": "<?xpacket begin=\"﻿\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?>",
+      "xpacket_end": "<?xpacket end=\"w\"?>",
+      "padding_bytes": 0
+    },
+    "native_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\reports\\native_xmp.xml",
+    "imgtor_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\reports\\imgtor_xmp.xml",
+    "raw_diff": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\reports\\xmp_raw_diff.txt",
+    "semantic_diff": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\reports\\xmp_semantic_diff.txt"
+  },
+  "jpeg_structure": {
+    "native_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\reports\\jpeg_structure_native.json",
+    "imgtor_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\reports\\jpeg_structure_imgtor.json",
+    "marker_diff": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\reports\\jpeg_marker_diff.txt"
+  },
+  "comparison_imgtor_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_EXIF_D_20260815.jpg",
+  "variants": {
+    "H": {
+      "changes": "native JPEG/MP4 retained; standard XMP replaced with current ImgTor Xiaomi XMP",
+      "local_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_JPEG_XMP_H_20260815.jpg",
+      "sha256": "4f3dd9bedb77bb67abba1d3c11858f33eeffd4ba18e5262e6c7da1daea6146cf",
+      "analysis": {
+        "motion_photo": true,
+        "valid": true,
+        "status": "valid",
+        "profile": "xiaomi",
+        "video_length": 6304806,
+        "errors": [],
+        "warnings": [],
+        "file": {
+          "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_JPEG_XMP_H_20260815.jpg",
+          "name": "MVIMG_JPEG_XMP_H_20260815.jpg",
+          "size_bytes": 10876886
+        },
+        "jpeg": {
+          "soi": true,
+          "eoi": true,
+          "valid": true,
+          "exif": {
+            "detected": true,
+            "Make": "Xiaomi",
+            "Model": "Redmi K60",
+            "Software": null,
+            "DateTime": "2026:07:15 05:51:04",
+            "Orientation": 0
+          },
+          "eoi_offset": 4572078,
+          "end_offset": 4572080
+        },
+        "xmp": {
+          "detected": true,
+          "namespaces": {
+            "x": "adobe:ns:meta/",
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "GCamera": "http://ns.google.com/photos/1.0/camera/"
+          },
+          "camera": {},
+          "legacy": {
+            "MicroVideo": 1,
+            "MicroVideoVersion": 1,
+            "MicroVideoOffset": 6304806,
+            "MicroVideoPresentationTimestampUs": 1796096
+          },
+          "container": {
+            "present": false,
+            "items": [],
+            "primary": null,
+            "motion_photo": null
+          }
+        },
+        "mp4": {
+          "offset": 4572080,
+          "declared_offset": 4572080,
+          "declared_length": 6304806,
+          "actual_length": 6304806,
+          "eof": true,
+          "trailing_bytes": 0,
+          "boxes": [
+            {
+              "type": "ftyp",
+              "offset": 4572080,
+              "size": 24,
+              "header_size": 8
+            },
+            {
+              "type": "moov",
+              "offset": 4572104,
+              "size": 2498,
+              "header_size": 8
+            },
+            {
+              "type": "free",
+              "offset": 4574602,
+              "size": 944,
+              "header_size": 8
+            },
+            {
+              "type": "mdat",
+              "offset": 4575546,
+              "size": 6301340,
+              "header_size": 16
+            }
+          ],
+          "box_types": [
+            "ftyp",
+            "moov",
+            "free",
+            "mdat"
+          ],
+          "ftyp": true,
+          "moov": true,
+          "mdat": true,
+          "video_tracks": 1,
+          "audio_tracks": 1,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "container_format": "mov,mp4,m4a,3gp,3g2,mj2",
+          "duration_seconds": 3.059789,
+          "video_resolution": [
+            1080,
+            1440
+          ],
+          "frame_rate": "30/1",
+          "pixel_format": "yuvj420p",
+          "audio_sample_rate": "44100",
+          "ffprobe": {
+            "available": true,
+            "ok": true,
+            "streams": [
+              {
+                "index": 0,
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1080,
+                "height": 1440,
+                "pix_fmt": "yuvj420p",
+                "r_frame_rate": "30/1"
+              },
+              {
+                "index": 1,
+                "codec_name": "aac",
+                "codec_type": "audio",
+                "sample_rate": "44100",
+                "r_frame_rate": "0/0"
+              }
+            ],
+            "format": {
+              "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+              "duration": "3.059789"
+            }
+          }
+        }
+      }
+    },
+    "I": {
+      "changes": "native XMP/MP4 retained; JPEG pixels re-encoded with Pillow",
+      "local_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_JPEG_XMP_I_20260815.jpg",
+      "sha256": "3ccac36bb07d2205399d90e47daf6bf41352b270870671809545ab0b0198fff4",
+      "analysis": {
+        "motion_photo": true,
+        "valid": true,
+        "status": "valid",
+        "profile": "xiaomi",
+        "video_length": 6304806,
+        "errors": [],
+        "warnings": [],
+        "file": {
+          "path": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\generated\\MVIMG_JPEG_XMP_I_20260815.jpg",
+          "name": "MVIMG_JPEG_XMP_I_20260815.jpg",
+          "size_bytes": 10641351
+        },
+        "jpeg": {
+          "soi": true,
+          "eoi": true,
+          "valid": true,
+          "exif": {
+            "detected": true,
+            "Make": "Xiaomi",
+            "Model": "Redmi K60",
+            "Software": null,
+            "DateTime": "2026:07:15 05:51:04",
+            "Orientation": 0
+          },
+          "eoi_offset": 4336543,
+          "end_offset": 4336545
+        },
+        "xmp": {
+          "detected": true,
+          "namespaces": {
+            "x": "adobe:ns:meta/",
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "GCamera": "http://ns.google.com/photos/1.0/camera/"
+          },
+          "camera": {},
+          "legacy": {
+            "MicroVideo": 1,
+            "MicroVideoVersion": 1,
+            "MicroVideoOffset": 6304806,
+            "MicroVideoPresentationTimestampUs": 1796096
+          },
+          "container": {
+            "present": false,
+            "items": [],
+            "primary": null,
+            "motion_photo": null
+          }
+        },
+        "mp4": {
+          "offset": 4336545,
+          "declared_offset": 4336545,
+          "declared_length": 6304806,
+          "actual_length": 6304806,
+          "eof": true,
+          "trailing_bytes": 0,
+          "boxes": [
+            {
+              "type": "ftyp",
+              "offset": 4336545,
+              "size": 24,
+              "header_size": 8
+            },
+            {
+              "type": "moov",
+              "offset": 4336569,
+              "size": 2498,
+              "header_size": 8
+            },
+            {
+              "type": "free",
+              "offset": 4339067,
+              "size": 944,
+              "header_size": 8
+            },
+            {
+              "type": "mdat",
+              "offset": 4340011,
+              "size": 6301340,
+              "header_size": 16
+            }
+          ],
+          "box_types": [
+            "ftyp",
+            "moov",
+            "free",
+            "mdat"
+          ],
+          "ftyp": true,
+          "moov": true,
+          "mdat": true,
+          "video_tracks": 1,
+          "audio_tracks": 1,
+          "video_codec": "h264",
+          "audio_codec": "aac",
+          "container_format": "mov,mp4,m4a,3gp,3g2,mj2",
+          "duration_seconds": 3.059789,
+          "video_resolution": [
+            1080,
+            1440
+          ],
+          "frame_rate": "30/1",
+          "pixel_format": "yuvj420p",
+          "audio_sample_rate": "44100",
+          "ffprobe": {
+            "available": true,
+            "ok": true,
+            "streams": [
+              {
+                "index": 0,
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1080,
+                "height": 1440,
+                "pix_fmt": "yuvj420p",
+                "r_frame_rate": "30/1"
+              },
+              {
+                "index": 1,
+                "codec_name": "aac",
+                "codec_type": "audio",
+                "sample_rate": "44100",
+                "r_frame_rate": "0/0"
+              }
+            ],
+            "format": {
+              "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+              "duration": "3.059789"
+            }
+          }
+        }
+      }
+    }
+  },
+  "device": {
+    "serial": "ce8df63f",
+    "manufacturer": "Xiaomi",
+    "brand": "Redmi",
+    "model": "23013RK75C",
+    "device": "mondrian",
+    "android": "15",
+    "sdk": "35",
+    "incremental": "OS3.0.8.0.VMNCNXM",
+    "hyperos": "V816",
+    "miui": "816",
+    "build": "AQ3A.250226.002"
+  },
+  "remote_files": {
+    "H": {
+      "remote_file": "/sdcard/DCIM/Camera/MVIMG_JPEG_XMP_H_20260815.jpg",
+      "size": 10876886
+    },
+    "I": {
+      "remote_file": "/sdcard/DCIM/Camera/MVIMG_JPEG_XMP_I_20260815.jpg",
+      "size": 10641351
+    }
+  },
+  "hyperos_result": {
+    "reported_by_user": true,
+    "G": {
+      "visible": true,
+      "motion_badge": true,
+      "playable": true,
+      "audio": true
+    },
+    "H": {
+      "visible": true,
+      "motion_badge": true,
+      "playable": true,
+      "audio": true
+    },
+    "I": {
+      "visible": true,
+      "motion_badge": true,
+      "playable": true,
+      "audio": true
+    }
+  }
+}

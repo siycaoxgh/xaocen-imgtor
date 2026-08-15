@@ -11,7 +11,8 @@ if _SRC_ROOT.is_dir() and str(_SRC_ROOT) not in sys.path:
 from xaocen_imgtor.config_manager import (DEFAULT_CONFIG, config_lock_error_message,
                                            load_config, update_config)
 from xaocen_imgtor.ratio_presets import RATIO_PRESETS
-from xaocen_imgtor.presets import GIF_FORMATS, GIF_FPS, GIF_MODES, IMAGE_FORMATS, SELECTION_MODES
+from xaocen_imgtor.presets import (GIF_FORMATS, GIF_FPS, GIF_MODES, ICO_ALLOWED_SIZES,
+                                   ICO_RECOMMENDED_SIZES, IMAGE_FORMATS, SELECTION_MODES)
 from xaocen_imgtor.plugin_manager import (discover_plugins, ensure_plugin_root,
                                            install_plugin_package, plugin_root,
                                            validate_plugin_root)
@@ -19,6 +20,7 @@ from xaocen_imgtor.plugin_host import run_plugin
 from xaocen_imgtor.runtime_status import read_status
 from xaocen_imgtor.shortcuts import validate_all
 from xaocen_imgtor.instance_lock import InstanceLock
+from xaocen_imgtor.startup import set_enabled as set_startup_enabled
 
 # In a PyInstaller build, UI assets and worker entry points are unpacked into
 # _MEIPASS.  Keep user data/plugins beside the executable instead of writing
@@ -26,8 +28,8 @@ from xaocen_imgtor.instance_lock import InstanceLock
 BASE = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent))
 APP_DIR = Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else BASE
 UI = BASE / 'ui' / 'index.html'
-ICON_PATH = BASE / 'xaocen-imgtor.ico'
-APP_TITLE = 'XAOCEN ImgTor v5.0.1'
+ICON_PATH = BASE / 'resources' / 'xaocen-imgtor.ico'
+APP_TITLE = 'XAOCEN ImgTor v5.3.2'
 MAX_CROP_SOURCES = 256
 MAX_PREVIEW_EDGE = 2048
 MAX_IMAGE_PREVIEW_BYTES = 16 * 1024 * 1024
@@ -350,7 +352,7 @@ class API:
                       'gif_fixed_height_str', 'language', 'save_directory', 'theme',
                       'auto_save', 'auto_clipboard', 'default_mode',
                       'default_ratio', 'fixed_width_str', 'fixed_height_str',
-                      'file_format', 'file_prefix'):
+                      'file_format', 'file_prefix', 'start_with_windows'):
             if field in data:
                 current[field] = data[field]
         try:
@@ -359,10 +361,18 @@ class API:
         except (TypeError, ValueError):
             return {'ok': False, 'errors': {'gif_fps': 'invalid_number'}, 'config': load_config()}
         try:
+            if 'start_with_windows' in current:
+                set_startup_enabled(bool(current['start_with_windows']))
             return {'ok': True, 'config': self.state_after(update_config(current))['config']}
         except TimeoutError:
             return {'ok': False, 'errors': {'config': 'config_busy'}, 'message': config_lock_error_message(),
                     'config': load_config()}
+        except OSError as exc:
+            if str(exc) == 'startup_not_supported':
+                return {'ok': False, 'errors': {'start_with_windows': 'unsupported'},
+                        'message': '开机自启动仅支持 Windows。', 'config': load_config()}
+            return {'ok': False, 'errors': {'start_with_windows': 'startup_failed'},
+                    'message': '开机自启动设置失败，请检查系统权限。', 'config': load_config()}
 
     def state_after(self, cfg):
         folder = save_dir(cfg); folder.mkdir(parents=True, exist_ok=True)
@@ -855,6 +865,169 @@ class API:
                 raise
         os.replace(temporary, target)
         return True
+
+    @staticmethod
+    def _rounded_image(source, radius_percent):
+        """Return a full-size RGBA image with an antialiased rounded mask.
+
+        The source alpha is multiplied by the mask instead of being replaced,
+        so transparent pixels in the original PNG/WebP remain transparent.
+        """
+        from PIL import Image, ImageChops, ImageDraw
+
+        with Image.open(source) as opened:
+            if bool(getattr(opened, 'is_animated', False)) and int(getattr(opened, 'n_frames', 1) or 1) > 1:
+                raise ValueError('rounded_animation_unsupported')
+            source_info = dict(opened.info)
+            if (opened.format or '').upper() == 'ICO' and getattr(opened, 'ico', None):
+                sizes = tuple(opened.ico.sizes())
+                if sizes:
+                    largest = max(sizes, key=lambda size: size[0] * size[1])
+                    image = opened.ico.getimage(largest).convert('RGBA')
+                else:
+                    image = opened.convert('RGBA')
+            else:
+                image = opened.convert('RGBA')
+
+        width, height = image.size
+        try:
+            percent = float(radius_percent)
+        except (TypeError, ValueError):
+            raise ValueError('invalid_rounded_radius')
+        if not 0 <= percent <= 50:
+            raise ValueError('invalid_rounded_radius')
+
+        # Use one rounded integer pixel radius for both UI and export.  The
+        # high-resolution mask gives the final edge a stable antialias.
+        radius_px = round(min(width, height) * percent / 100)
+        scale = 4
+        mask_large = Image.new('L', (width * scale, height * scale), 0)
+        ImageDraw.Draw(mask_large).rounded_rectangle(
+            (0, 0, width * scale - 1, height * scale - 1),
+            radius=radius_px * scale,
+            fill=255,
+        )
+        mask = mask_large.resize((width, height), Image.Resampling.LANCZOS)
+        combined_alpha = ImageChops.multiply(image.getchannel('A'), mask)
+        image.putalpha(combined_alpha)
+        return image, source_info, radius_px, percent
+
+    def save_rounded_image(self, data_url, filename, radius_percent=12,
+                           output_format='png', source_path='', ico_sizes=None):
+        """Apply a full-size rounded Alpha mask and export PNG, WebP or ICO."""
+        output_format = str(output_format or '').lower()
+        if output_format not in {'png', 'webp', 'ico'}:
+            return {'ok': False, 'error': 'rounded_output_format_invalid'}
+
+        selected_ico_sizes = None
+        if output_format == 'ico':
+            if ico_sizes is None:
+                selected_ico_sizes = list(ICO_RECOMMENDED_SIZES)
+            else:
+                try:
+                    selected_ico_sizes = sorted({int(size) for size in ico_sizes})
+                except (TypeError, ValueError):
+                    return {'ok': False, 'error': 'ico_size_invalid'}
+                if not selected_ico_sizes:
+                    return {'ok': False, 'error': 'ico_sizes_empty'}
+                if any(size not in ICO_ALLOWED_SIZES for size in selected_ico_sizes):
+                    return {'ok': False, 'error': 'ico_size_invalid'}
+
+        source = Path(source_path).expanduser().resolve() if source_path else None
+        if source:
+            if str(source) not in self._crop_sources or not source.is_file():
+                return {'ok': False, 'error': 'source_path_unavailable'}
+        else:
+            try:
+                _header, payload = data_url.split(',', 1)
+                raw = base64.b64decode(payload, validate=True)
+                source = None
+                image_data = io.BytesIO(raw)
+            except (AttributeError, ValueError, binascii.Error):
+                return {'ok': False, 'error': 'rounded_source_invalid'}
+
+        folder = save_dir(load_config())
+        folder.mkdir(parents=True, exist_ok=True)
+        stem = Path(filename or 'image').stem or 'image'
+        safe_stem = ''.join(char if char.isalnum() or char in ('-', '_') else '_'
+                             for char in stem).strip('._') or 'image'
+        target = folder / f'{safe_stem}_rounded.{output_format}'
+        number = 2
+        while target.exists():
+            target = folder / f'{safe_stem}_rounded_{number}.{output_format}'
+            number += 1
+
+        temporary = None
+        try:
+            rounded, source_info, radius_px, percent = self._rounded_image(
+                source if source else image_data, radius_percent)
+            with tempfile.NamedTemporaryFile(
+                    suffix=target.suffix, prefix=f'.{target.stem}_',
+                    dir=target.parent, delete=False) as handle:
+                temporary = Path(handle.name)
+            if output_format == 'ico':
+                frames = self._build_ico_frames(rounded, selected_ico_sizes)
+                frames[0].save(
+                    temporary,
+                    format='ICO',
+                    append_images=frames[1:],
+                    sizes=[frame.size for frame in frames],
+                )
+            else:
+                options = {'format': output_format.upper()}
+                if source_info.get('icc_profile'):
+                    options['icc_profile'] = source_info['icc_profile']
+                if output_format == 'png':
+                    options['optimize'] = True
+                else:
+                    options.update(lossless=True, method=6)
+                rounded.save(temporary, **options)
+            os.replace(temporary, target)
+            result = {
+                'ok': True,
+                'path': str(target),
+                'width': rounded.width,
+                'height': rounded.height,
+                'radius_percent': percent,
+                'radius_px': radius_px,
+                'format': output_format,
+            }
+            if selected_ico_sizes is not None:
+                result['sizes'] = selected_ico_sizes
+            return result
+        except ValueError as exc:
+            if temporary:
+                temporary.unlink(missing_ok=True)
+            error = str(exc)
+            if error == 'rounded_animation_unsupported':
+                return {'ok': False, 'error': error}
+            if error == 'invalid_rounded_radius':
+                return {'ok': False, 'error': 'rounded_radius_invalid'}
+            return {'ok': False, 'error': 'rounded_save_failed', 'detail': error}
+        except OSError as exc:
+            if temporary:
+                temporary.unlink(missing_ok=True)
+            return {'ok': False, 'error': 'rounded_save_failed', 'detail': str(exc)}
+
+    @staticmethod
+    def _build_ico_frames(image, sizes):
+        """Create square RGBA ICO frames directly from the full-size master."""
+        from PIL import Image
+
+        frames = []
+        for size in sizes:
+            canvas = Image.new('RGBA', (size, size), (0, 0, 0, 0))
+            scale = min(size / image.width, size / image.height)
+            width = max(1, round(image.width * scale))
+            height = max(1, round(image.height * scale))
+            resized = image.resize((width, height), Image.Resampling.LANCZOS)
+            position = ((size - width) // 2, (size - height) // 2)
+            canvas.paste(resized, position, resized)
+            frames.append(canvas)
+        # Pillow's ICO writer only considers requested sizes up to the first
+        # image's dimensions, so keep the largest frame first while retaining
+        # every requested frame in the same file.
+        return sorted(frames, key=lambda frame: frame.width * frame.height, reverse=True)
 
     def save_crop(self, data_url, filename, overwrite=False, source_path='', crop_rect=None):
         from PIL import Image

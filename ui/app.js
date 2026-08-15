@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const APP_VERSION = '4.9.0';
+  const APP_VERSION = '5.3.2';
   const RATIOS = ['1:1', '1:2', '2:1', '2:3', '3:2', '3:4', '4:3', '16:6', '9:16', '16:9', '9:18', '18:9', '21:9'];
   const CUSTOM_RATIO = '__custom__';
   const FPS = [5, 8, 10, 12, 15, 20, 24, 30];
@@ -31,7 +31,7 @@
       'mode.free':'自由大小', 'mode.ratio':'固定比例', 'mode.fixed':'固定尺寸', 'common.apply':'应用截图参数', 'common.save':'保存', 'common.saved':'已保存', 'common.saving':'保存中…', 'common.cancel':'取消', 'common.invalid':'保存失败，请检查输入',
       'gif.title':'动图录制', 'gif.subtitle':'先调整选区、帧率和格式，再按开始快捷键进入 3/2/1 倒计时；最长 15 秒自动停止。', 'gif.flowTitle':'录制流程', 'gif.flow.select':'框选区域', 'gif.flow.start':'按下开始键', 'gif.flow.countdown':'3·2·1 倒计时', 'gif.flow.record':'录制中', 'gif.fps':'帧率选择', 'gif.format':'输出格式', 'gif.mode':'选区模式', 'gif.width':'固定宽度（px / in / cm / mm）', 'gif.height':'固定高度（px / in / cm / mm）', 'gif.ratio':'选区比例', 'gif.other':'其他', 'gif.free':'自由大小', 'gif.start':'开始录制', 'gif.directory':'录制保存路径', 'gif.chooseDirectory':'选择路径', 'gif.sameDirectory':'与截图使用同一个保存目录，图库会统一读取这里的文件；动图仅保存本地，不复制到剪贴板。', 'gif.configureShortcuts':'设置快捷键', 'gif.shortcuts':'设置录制快捷键', 'gif.enterStart':'回车开始', 'gif.startLabel':'开始', 'gif.stopLabel':'结束',
       'gallery.title':'图片浏览', 'gallery.all':'全部', 'gallery.images':'图片', 'gallery.motion':'动图', 'gallery.openFolder':'打开目录', 'gallery.empty':'保存目录中还没有图片。', 'gallery.emptyFirst':'还没有图片，试试先截一张图。', 'gallery.noMatch':'没有匹配的图片。', 'gallery.captureNow':'前往快速截图', 'gallery.resetFilter':'重置筛选', 'gallery.animated':'动图', 'gallery.open':'打开文件', 'gallery.delete':'删除', 'gallery.deleteTitle':'删除图片', 'gallery.play':'播放', 'gallery.pause':'暂停', 'gallery.prev':'上一张', 'gallery.next':'下一张', 'gallery.navigation':'← / → 切换图片', 'gallery.subtitle':'支持 PNG、JPG、BMP、GIF、APNG 与 Animated WebP；方向键可切换图片。',
-      'crop.title':'图片裁剪', 'crop.subtitle':'选择或拖入图片，在画布中框选区域、选择比例并保存。', 'crop.open':'选择文件', 'crop.drop':'也可以将图片拖到预览区域', 'crop.hint':'拖动画框移动选区 · 拖动四角调整大小', 'crop.overwriteHint':'拖入图片无法覆盖原图，请使用“选择文件”打开原图。', 'crop.free':'自由绘制', 'crop.freeDraw':'自由绘制', 'crop.fixedRatio':'固定比例', 'crop.fixedSize':'固定大小', 'crop.ratio':'比例', 'crop.size':'尺寸', 'crop.overwrite':'替换原图', 'crop.save':'裁剪并保存', 'crop.clear':'清空图片',
+      'crop.title':'图片裁剪', 'crop.subtitle':'选择或拖入图片，在画布中框选区域、选择比例并保存。', 'crop.open':'选择文件', 'crop.drop':'也可以将图片拖到预览区域', 'crop.hint':'拖动画框移动选区 · 拖动四角调整大小', 'crop.overwriteHint':'拖入图片无法覆盖原图，请使用“选择文件”打开原图。', 'crop.free':'自由绘制', 'crop.freeDraw':'自由绘制', 'crop.fixedRatio':'固定比例', 'crop.fixedSize':'固定大小', 'crop.ratio':'比例', 'crop.size':'尺寸', 'crop.overwrite':'替换原图', 'crop.save':'裁剪并保存', 'crop.clear':'清空图片', 'crop.processMode':'处理模式', 'crop.rectMode':'矩形裁剪', 'crop.roundedMode':'圆角处理', 'crop.roundedPreset':'圆角预设', 'crop.roundedNone':'无圆角', 'crop.roundedDefault':'圆角', 'crop.roundedRadius':'圆角半径', 'crop.roundedFormat':'输出格式', 'crop.roundedSave':'导出圆角图片', 'crop.icoSave':'导出 ICO', 'crop.roundedOutput':'原图尺寸', 'crop.roundedNoAnimation':'第一版圆角处理仅支持静态图片，不处理动画。', 'crop.roundedNoSource':'请先选择或拖入图片后再导出', 'crop.roundedFormatInvalid':'圆角处理支持 PNG、WebP 或 ICO 输出', 'crop.roundedRadiusInvalid':'圆角半径必须在 0% 到 50% 之间', 'crop.icoSizes':'ICO 图标尺寸', 'crop.icoRecommended':'Windows 推荐', 'crop.icoCustom':'自定义', 'crop.icoRecommendedHint':'默认包含 16、24、32、48、256 px 五种尺寸。', 'crop.icoBaseSizes':'基础尺寸', 'crop.icoAdvanced':'展开高级尺寸', 'crop.icoAdvancedSizes':'高级尺寸', 'crop.icoNoSizes':'请至少选择一个 ICO 尺寸', 'crop.icoSizeInvalid':'ICO 尺寸无效，请使用界面提供的尺寸',
       'settings.title':'设置', 'settings.subtitle':'每项设置单独占一行；快捷键保存后立即生效，其他选项直接写入配置。', 'settings.shortcutGroup':'快捷键设置', 'settings.otherGroup':'录制与应用设置', 'settings.shortcutSaveHint':'保存快捷键后立即生效', 'settings.otherSaveHint':'其他选项直接写入配置', 'settings.captureKey':'截图快捷键', 'settings.recordStart':'录制开始快捷键', 'settings.recordStop':'录制结束快捷键', 'settings.fps':'录制 FPS', 'settings.format':'录制格式', 'settings.directory':'保存目录', 'settings.chooseDirectory':'选择目录', 'settings.theme':'界面主题', 'settings.language':'界面语言', 'settings.saveShortcuts':'保存快捷键', 'settings.saveOther':'保存其他设置',
       'language.zh':'中文', 'language.en':'English', 'about.title':'关于 xaocen-imgtor', 'about.subtitle':'轻量 · 高效 · Windows 优先支持', 'about.version':'版本', 'about.featureCount':'20+', 'about.features':'已完成功能', 'about.fileCount':'20+', 'about.sourceFiles':'活跃源码文件', 'about.pendingCount':'4', 'about.pending':'待定功能', 'about.doneTitle':'✅ 已完成功能', 'about.done.core':'全局快捷键截图 — 比例约束 / 固定尺寸 / 自由大小', 'about.done.overlay':'半透明遮罩 + 十字参考线 + 四角标记 + 框内拖拽微调', 'about.done.format':'自动保存 PNG/JPG/BMP + 自动剪贴板，截图超时兜底清理', 'about.done.gif':'拖框选区 + Enter 开始 + 3/2/1 倒计时，GIF / APNG / WebP 输出', 'about.done.gallery':'缩略图网格 + 原图大图预览 + 键盘切换 + 动图播放/暂停 + 删除', 'about.done.crop':'拖放图片 + 自由绘制 / 固定比例 / 固定尺寸三种裁剪模式', 'about.done.settings':'GUI 设置面板 + 实时快捷键录入校验 + 目录选择器 + 中英双语', 'about.done.theme':'亮色 / 暗色主题 + 系统托盘后台 + 单实例锁 + 原生控件圆角', 'about.done.plugins':'可选 MP4 录制与 Android Motion Photo 插件，保持核心程序轻量', 'about.pendingTitle':'🔲 待定 / 后续', 'about.pending.mac':'macOS 适配 — 代码已预留平台分支，需实机测试', 'about.pending.exe':'PyInstaller 打包 exe — 预估 45-50 MB，后续可加', 'about.pending.motion':'Motion Photo 兼容性 — 小米等 OEM 相册仍需实机验证', 'about.excludedTitle':'🚫 已排除', 'about.excluded.live':'iOS Live Photo — Apple 私有格式，Windows 无法生成兼容文件', 'about.panels':'功能面板', 'about.dependencies':'核心依赖', 'about.supportTitle':'平台支持', 'about.support':'Windows 优先支持；macOS/Linux 已预留代码分支，尚未完成实机验证。', 'about.eyebrow':'项目资料', 'gallery.motionPhoto':'Motion 图', 'motion.previewTitle':'视频预览', 'motion.useStart':'将此位置设为起点',
       'status.running':'截图监听已启用', 'status.stopped':'截图监听未运行', 'status.restarted':'截图监听已重启', 'shortcut.empty':'请输入快捷键', 'shortcut.invalid':'快捷键格式无效', 'shortcut.modifier':'普通字符必须搭配 Ctrl / Shift / Alt', 'shortcut.reserved':'该快捷键是系统或常用编辑快捷键', 'shortcut.same':'开始和结束快捷键不能相同', 'shortcut.conflictHotkey':'与截图快捷键冲突', 'shortcut.conflictStart':'与录制开始快捷键冲突', 'shortcut.conflictStop':'与录制结束快捷键冲突', 'shortcut.pending':'待保存', 'shortcut.saved':'已保存', 'shortcut.listening':'请按下快捷键…', 'crop.needImage':'请先打开或拖入图片', 'crop.needArea':'请先框选裁剪区域', 'gallery.confirmDelete':'确定删除这张图片吗？', 'gallery.noFile':'无法打开该文件', 'crop.emptyTitle':'使用上方“选择文件”或拖入图片开始', 'crop.emptyDesc':'支持 PNG、JPG、BMP 等常见格式，拖动鼠标框选裁剪区域'
@@ -47,19 +47,19 @@
       'mode.free':'Free size', 'mode.ratio':'Fixed ratio', 'mode.fixed':'Fixed size', 'common.apply':'Apply capture settings', 'common.save':'Save', 'common.saved':'Saved', 'common.saving':'Saving…', 'common.cancel':'Cancel', 'common.invalid':'Save failed; check the input',
       'gif.title':'GIF recorder', 'gif.subtitle':'Adjust the area, FPS and format first. Start recording to begin a 3/2/1 countdown; it stops after 15 seconds.', 'gif.flowTitle':'Recording flow', 'gif.flow.select':'Frame an area', 'gif.flow.start':'Press start key', 'gif.flow.countdown':'3·2·1 countdown', 'gif.flow.record':'Recording', 'gif.fps':'FPS selection', 'gif.format':'Output format', 'gif.mode':'Selection mode', 'gif.width':'Fixed width (px / in / cm / mm)', 'gif.height':'Fixed height (px / in / cm / mm)', 'gif.ratio':'Selection ratio', 'gif.other':'Other', 'gif.free':'Free size', 'gif.start':'Start recording', 'gif.directory':'Recording save path', 'gif.chooseDirectory':'Choose path', 'gif.sameDirectory':'Uses the same directory as screenshots so the gallery stays unified. Motion files are saved locally only and are not copied to the clipboard.', 'gif.configureShortcuts':'Set shortcuts', 'gif.shortcuts':'Recording shortcuts', 'gif.enterStart':'Enter to start', 'gif.startLabel':'to start', 'gif.stopLabel':'to stop',
       'gallery.title':'Image browser', 'gallery.all':'All', 'gallery.images':'Images', 'gallery.motion':'Motion', 'gallery.openFolder':'Open folder', 'gallery.empty':'No images in the save directory.', 'gallery.emptyFirst':'No images yet. Try taking a screenshot first.', 'gallery.noMatch':'No matching images.', 'gallery.captureNow':'Go to quick capture', 'gallery.resetFilter':'Reset filter', 'gallery.animated':'Motion', 'gallery.open':'Open file', 'gallery.delete':'Delete', 'gallery.deleteTitle':'Delete image', 'gallery.play':'Play', 'gallery.pause':'Pause', 'gallery.prev':'Previous', 'gallery.next':'Next', 'gallery.navigation':'← / → to switch images', 'gallery.subtitle':'Supports PNG, JPG, BMP, GIF, APNG and Animated WebP; use the arrow keys to switch images.',
-      'crop.title':'Crop image', 'crop.subtitle':'Choose or drop an image, frame the crop on the canvas and save it.', 'crop.open':'Choose file', 'crop.drop':'You can also drop an image on the preview', 'crop.hint':'Drag the frame to move it · Drag a corner to resize it', 'crop.overwriteHint':'A dropped image cannot replace the original. Use “Choose file” to open it.', 'crop.free':'Free draw', 'crop.freeDraw':'Free draw', 'crop.fixedRatio':'Fixed ratio', 'crop.fixedSize':'Fixed size', 'crop.ratio':'Ratio', 'crop.size':'Size', 'crop.overwrite':'Replace original', 'crop.save':'Crop and save', 'crop.clear':'Clear image',
+      'crop.title':'Crop image', 'crop.subtitle':'Choose or drop an image, frame the crop on the canvas and save it.', 'crop.open':'Choose file', 'crop.drop':'You can also drop an image on the preview', 'crop.hint':'Drag the frame to move it · Drag a corner to resize it', 'crop.overwriteHint':'A dropped image cannot replace the original. Use “Choose file” to open it.', 'crop.free':'Free draw', 'crop.freeDraw':'Free draw', 'crop.fixedRatio':'Fixed ratio', 'crop.fixedSize':'Fixed size', 'crop.ratio':'Ratio', 'crop.size':'Size', 'crop.overwrite':'Replace original', 'crop.save':'Crop and save', 'crop.clear':'Clear image', 'crop.processMode':'Processing mode', 'crop.rectMode':'Rectangular crop', 'crop.roundedMode':'Rounded processing', 'crop.roundedPreset':'Rounded preset', 'crop.roundedNone':'No radius', 'crop.roundedDefault':'Rounded', 'crop.roundedRadius':'Corner radius', 'crop.roundedFormat':'Output format', 'crop.roundedSave':'Export rounded image', 'crop.icoSave':'Export ICO', 'crop.roundedOutput':'Original size', 'crop.roundedNoAnimation':'Rounded processing v1 supports still images only; animations are not processed.', 'crop.roundedNoSource':'Choose or drop an image before exporting', 'crop.roundedFormatInvalid':'Rounded processing supports PNG, WebP or ICO output', 'crop.roundedRadiusInvalid':'Corner radius must be between 0% and 50%', 'crop.icoSizes':'ICO icon sizes', 'crop.icoRecommended':'Windows recommended', 'crop.icoCustom':'Custom', 'crop.icoRecommendedHint':'Includes 16, 24, 32, 48 and 256 px by default.', 'crop.icoBaseSizes':'Base sizes', 'crop.icoAdvanced':'Show advanced sizes', 'crop.icoAdvancedSizes':'Advanced sizes', 'crop.icoNoSizes':'Select at least one ICO size', 'crop.icoSizeInvalid':'Invalid ICO size; use a size provided by the interface',
       'settings.title':'Settings', 'settings.subtitle':'Each setting gets its own row. Shortcuts apply after saving; other options are written directly to the config.', 'settings.shortcutGroup':'Shortcut settings', 'settings.otherGroup':'Recording and app settings', 'settings.shortcutSaveHint':'Shortcuts apply immediately after saving', 'settings.otherSaveHint':'Other options are written to the config', 'settings.captureKey':'Capture shortcut', 'settings.recordStart':'Recording start shortcut', 'settings.recordStop':'Recording stop shortcut', 'settings.fps':'Recording FPS', 'settings.format':'Recording format', 'settings.directory':'Save directory', 'settings.chooseDirectory':'Choose directory', 'settings.theme':'Theme', 'settings.language':'Language', 'settings.saveShortcuts':'Save shortcuts', 'settings.saveOther':'Save other settings',
       'language.zh':'中文', 'language.en':'English', 'about.title':'About xaocen-imgtor', 'about.subtitle':'Lightweight · Efficient · Windows first', 'about.version':'Version', 'about.featureCount':'20+', 'about.features':'Completed', 'about.fileCount':'20+', 'about.sourceFiles':'Active source files', 'about.pendingCount':'4', 'about.pending':'Planned', 'about.doneTitle':'✅ Completed', 'about.done.core':'Global hotkey capture — ratios, fixed size, free size', 'about.done.overlay':'Translucent mask + guidelines + corner marks + drag fine-tuning', 'about.done.format':'Auto-save PNG/JPG/BMP + clipboard, capture timeout fallback', 'about.done.gif':'Drag area + Enter to start + 3/2/1 countdown, GIF / APNG / WebP', 'about.done.gallery':'Thumbnail grid + full-res preview + keyboard nav + play/pause + delete', 'about.done.crop':'Drag-and-drop image + free draw / fixed ratio / fixed size cropping', 'about.done.settings':'Settings panel + real-time shortcut recording + directory picker + i18n', 'about.done.theme':'Light/dark theme + system tray + single instance lock + rounded controls', 'about.done.plugins':'Optional MP4 recording and Android Motion Photo plugins keep the core lightweight', 'about.pendingTitle':'🔲 Planned', 'about.pending.mac':'macOS support — platform branches reserved, needs hardware testing', 'about.pending.exe':'PyInstaller .exe packaging — est. 45-50 MB, planned for later', 'about.pending.motion':'Motion Photo compatibility — OEM galleries such as Xiaomi still need hardware validation', 'about.excludedTitle':'🚫 Excluded', 'about.excluded.live':'iOS Live Photo — Apple proprietary, incompatible with Windows', 'about.panels':'Panels', 'about.dependencies':'Core deps', 'about.supportTitle':'Platform support', 'about.support':'Windows first; macOS / Linux branches are reserved but not hardware-verified.', 'about.eyebrow':'Project info', 'gallery.motionPhoto':'Motion Photo', 'motion.previewTitle':'Video preview', 'motion.useStart':'Use this position as start',
       'status.running':'Capture listener enabled', 'status.stopped':'Capture listener is not running', 'status.restarted':'Capture listener restarted', 'shortcut.empty':'Enter a shortcut', 'shortcut.invalid':'Invalid shortcut format', 'shortcut.modifier':'A normal character needs Ctrl / Shift / Alt', 'shortcut.reserved':'This is a system or common editing shortcut', 'shortcut.same':'Start and stop shortcuts must be different', 'shortcut.conflictHotkey':'Conflicts with the capture shortcut', 'shortcut.conflictStart':'Conflicts with the recording start shortcut', 'shortcut.conflictStop':'Conflicts with the recording stop shortcut', 'shortcut.pending':'Pending save', 'shortcut.saved':'Saved', 'shortcut.listening':'Press a shortcut…', 'crop.needImage':'Open or drop an image first', 'crop.needArea':'Select a crop area first', 'gallery.confirmDelete':'Delete this image?', 'gallery.noFile':'Unable to open this file', 'crop.emptyTitle':'Use “Choose file” above or drop an image', 'crop.emptyDesc':'Supports PNG, JPG, BMP and other formats — drag to select the crop area'
     }
   };
-  const state = { config:{}, ratios:RATIOS, selectionModes:['free','ratio','fixed'], imageFormats:IMAGE_FORMATS, gifFormats:GIF_FORMATS, fps:FPS, gifModes:GIF_MODES, files:[], plugins:[], pluginRoot:'', motionVideo:null, motionNotice:'', videoPluginReady:false, stats:{}, current:'launcher', filter:'all', pending:{}, crop:{ image:null, name:'', path:'', mode:'free', ratio:'1:1', fixedWidth:'400px', fixedHeight:'320px', imageX:0, imageY:0, imageW:0, imageH:0, scale:1, selection:null, dragging:false, dragMode:'draw', dragStart:null, dragOffset:null }, modal:null };
+  const state = { config:{}, ratios:RATIOS, selectionModes:['free','ratio','fixed'], imageFormats:IMAGE_FORMATS, gifFormats:GIF_FORMATS, fps:FPS, gifModes:GIF_MODES, files:[], plugins:[], pluginRoot:'', motionVideo:null, motionNotice:'', videoPluginReady:false, stats:{}, current:'launcher', filter:'all', pending:{}, crop:{ image:null, name:'', path:'', sourceDataUrl:'', processingMode:'crop', cropMode:'free', ratio:'1:1', fixedWidth:'400px', fixedHeight:'320px', roundedPreset:'rounded', roundedPercent:12, roundedFormat:'png', icoMode:'recommended', icoSizes:[16,24,32,48,256], icoAdvanced:false, originalWidth:0, originalHeight:0, imageX:0, imageY:0, imageW:0, imageH:0, scale:1, selection:null, dragging:false, dragMode:'draw', dragStart:null, dragOffset:null }, modal:null };
   const PLUGIN_GUIDES = [
     { id:'video-recorder-ffmpeg', title:'MP4 Video Recorder (FFmpeg)', purpose:'plugins.videoPurpose', download:'https://github.com/siycaoxgh/xaocen-plugin' },
     { id:'android-motion-photo', title:'Android Motion Photo', purpose:'plugins.motionPurpose', download:'https://github.com/siycaoxgh/xaocen-plugin' }
   ];
-  I18N.zh['about.done.crop'] = '页面内选择或拖入图片（拖入仅可另存）+ 自由绘制 / 固定比例 / 固定尺寸裁剪';
-  I18N.en['about.done.crop'] = 'Choose or drop an image (dropped images save as a copy) + free draw / fixed ratio / fixed size cropping';
+  I18N.zh['about.done.crop'] = '页面内选择或拖入图片（拖入仅可另存）+ 矩形裁剪（自由绘制 / 固定比例 / 固定尺寸）+ 圆角处理（静态 PNG/WebP）';
+  I18N.en['about.done.crop'] = 'Choose or drop an image (dropped images save as a copy) + rectangular crop modes (free draw / fixed ratio / fixed size) + rounded processing for still PNG/WebP';
   I18N.zh['about.pending.integration'] = '官方插件签名与来源校验 — 当前已提供完整性哈希校验';
   I18N.en['about.pending.integration'] = 'Official plugin signatures and source verification — integrity hashes are available now';
   I18N.zh['about.title'] = '关于 XAOCEN ImgTor';
@@ -164,6 +164,12 @@
   I18N.zh['gallery.video'] = '\u89c6\u9891'; I18N.en['gallery.video'] = 'Video';
   I18N.zh['gallery.subtitle'] = '\u652f\u6301 PNG\u3001JPG\u3001BMP\u3001GIF\u3001APNG\u3001Animated WebP \u4e0e MP4\uff1b\u65b9\u5411\u952e\u53ef\u5207\u6362\u5a92\u4f53\u3002';
   I18N.en['gallery.subtitle'] = 'Supports PNG, JPG, BMP, GIF, APNG, Animated WebP and MP4; use arrow keys to switch media.';
+  I18N.zh['settings.startup'] = '开机自启动';
+  I18N.zh['settings.startupToggle'] = '登录 Windows 后自动启动';
+  I18N.zh['settings.startupHint'] = '保存其他设置后生效。';
+  I18N.en['settings.startup'] = 'Start with Windows';
+  I18N.en['settings.startupToggle'] = 'Launch after Windows sign-in';
+  I18N.en['settings.startupHint'] = 'Takes effect after saving other settings.';
   I18N.zh['plugins.chooseDirectory'] = '\u9009\u62e9\u63d2\u4ef6\u76ee\u5f55'; I18N.en['plugins.chooseDirectory'] = 'Choose plugin folder';
   I18N.zh['plugins.useDefault'] = '\u4f7f\u7528\u9ed8\u8ba4\u76ee\u5f55'; I18N.en['plugins.useDefault'] = 'Use default folder';
   I18N.zh['plugins.directoryHint'] = '\u53ef\u9009\u62e9\u8f6f\u4ef6\u5b89\u88c5\u76ee\u5f55\u4e0b\u7684 plugins\uff1b\u76ee\u5f55\u5fc5\u987b\u53ef\u5199\u3002'; I18N.en['plugins.directoryHint'] = 'You may choose <app>\\plugins; the directory must be writable.';
@@ -339,7 +345,7 @@
   }
 
   function renderSettings() {
-    $('hotkey').value = displayKey(state.config.hotkey); $('recordStart').value = displayKey(state.config.record_start_key); $('recordStop').value = displayKey(state.config.record_stop_key); $('settingFps').value = String(state.config.gif_fps || 10); $('settingFormat').value = state.config.gif_format || 'gif'; $('saveDir').value = state.config.save_directory || ''; $('themeMode').value = state.config.theme || 'light'; $('languageMode').value = state.config.language || 'zh';
+    $('hotkey').value = displayKey(state.config.hotkey); $('recordStart').value = displayKey(state.config.record_start_key); $('recordStop').value = displayKey(state.config.record_stop_key); $('settingFps').value = String(state.config.gif_fps || 10); $('settingFormat').value = state.config.gif_format || 'gif'; $('saveDir').value = state.config.save_directory || ''; $('themeMode').value = state.config.theme || 'light'; $('languageMode').value = state.config.language || 'zh'; $('startWithWindows').checked = !!state.config.start_with_windows;
   }
   function renderPlugins() {
     const list = $('pluginList'), directory = $('pluginDirectory');
@@ -539,18 +545,106 @@
   function cropRatioValue() { const parts=String(state.crop.ratio || '1:1').split(':').map(Number); return parts[0] > 0 && parts[1] > 0 ? parts[0] / parts[1] : 1; }
   function clampCropSelection(sel) {
     const c=state.crop, right=c.imageX+c.imageW, bottom=c.imageY+c.imageH;
-    let w=Math.max(3,Number(sel.w)||3), h=Math.max(3,Number(sel.h)||3), x=Number(sel.x)||c.imageX, y=Number(sel.y)||c.imageY;
-    if(c.mode==='ratio'){ const target=cropRatioValue(); if(w/h>target) w=h*target; else h=w/target; }
-    if(c.mode==='fixed'){ w=Math.min(c.imageW,parseCropDimension(c.fixedWidth,400)*c.scale); h=Math.min(c.imageH,parseCropDimension(c.fixedHeight,320)*c.scale); }
-    w=Math.min(w,c.imageW); h=Math.min(h,c.imageH); x=Math.max(c.imageX,Math.min(x,right-w)); y=Math.max(c.imageY,Math.min(y,bottom-h));
-    if(c.mode==='ratio'){ const target=cropRatioValue(); if(w/h>target) w=h*target; else h=w/target; w=Math.min(w,right-x);h=Math.min(h,bottom-y); }
+    if(!c.image) return null;
+    let w=Math.max(3,Number(sel?.w)||3), h=Math.max(3,Number(sel?.h)||3), x=Number(sel?.x), y=Number(sel?.y);
+    if(!Number.isFinite(x)) x=c.imageX;
+    if(!Number.isFinite(y)) y=c.imageY;
+    if(c.cropMode==='fixed'){
+      w=Math.min(c.imageW,parseCropDimension(c.fixedWidth,400)*c.scale);
+      h=Math.min(c.imageH,parseCropDimension(c.fixedHeight,320)*c.scale);
+    } else if(c.cropMode==='ratio'){
+      const target=cropRatioValue();
+      if(w/h>target) w=h*target; else h=w/target;
+    }
+    w=Math.min(Math.max(3,w),c.imageW); h=Math.min(Math.max(3,h),c.imageH);
+    if(c.cropMode==='ratio'){
+      const target=cropRatioValue();
+      if(w/h>target) w=h*target; else h=w/target;
+      if(w>c.imageW){w=c.imageW;h=w/target;}
+      if(h>c.imageH){h=c.imageH;w=h*target;}
+    }
+    x=Math.max(c.imageX,Math.min(x,right-w)); y=Math.max(c.imageY,Math.min(y,bottom-h));
     return {x,y,w:Math.max(3,w),h:Math.max(3,h)};
   }
-  function updateCropInfo() { const c=state.crop, info=$('cropInfo'); if(!info)return; if(!c.image){info.textContent='';return;} info.textContent=`${c.name} · ${c.image.naturalWidth} × ${c.image.naturalHeight} px · ${c.mode==='free'?t('crop.freeDraw'):c.mode==='ratio'?`${t('crop.fixedRatio')} ${c.ratio}`:`${t('crop.fixedSize')} ${c.fixedWidth} × ${c.fixedHeight}`}`; }
+  function initialCropSelection() {
+    const c=state.crop;
+    if(!c.image || c.cropMode==='free') return null;
+    let w=c.imageW*.72, h=c.imageH*.72;
+    if(c.cropMode==='fixed'){
+      w=Math.min(c.imageW,parseCropDimension(c.fixedWidth,400)*c.scale);
+      h=Math.min(c.imageH,parseCropDimension(c.fixedHeight,320)*c.scale);
+    } else {
+      const target=cropRatioValue();
+      if(w/h>target) w=h*target; else h=w/target;
+      if(w>c.imageW){w=c.imageW;h=w/target;}
+      if(h>c.imageH){h=c.imageH;w=h*target;}
+    }
+    return clampCropSelection({x:c.imageX+(c.imageW-w)/2,y:c.imageY+(c.imageH-h)/2,w,h});
+  }
+  function cropHandleAt(point) {
+    const s=state.crop.selection;
+    if(!s || state.crop.cropMode==='fixed') return point.x>=s?.x && point.x<=s?.x+s?.w && point.y>=s?.y && point.y<=s?.y+s?.h ? 'move' : '';
+    const tolerance=10, right=s.x+s.w, bottom=s.y+s.h;
+    const nearLeft=Math.abs(point.x-s.x)<=tolerance, nearRight=Math.abs(point.x-right)<=tolerance;
+    const nearTop=Math.abs(point.y-s.y)<=tolerance, nearBottom=Math.abs(point.y-bottom)<=tolerance;
+    if(nearLeft && nearTop) return 'nw'; if(nearRight && nearTop) return 'ne';
+    if(nearLeft && nearBottom) return 'sw'; if(nearRight && nearBottom) return 'se';
+    if(nearTop && point.x>=s.x-tolerance && point.x<=right+tolerance) return 'n';
+    if(nearBottom && point.x>=s.x-tolerance && point.x<=right+tolerance) return 's';
+    if(nearLeft && point.y>=s.y-tolerance && point.y<=bottom+tolerance) return 'w';
+    if(nearRight && point.y>=s.y-tolerance && point.y<=bottom+tolerance) return 'e';
+    if(point.x>=s.x && point.x<=right && point.y>=s.y && point.y<=bottom) return 'move';
+    return '';
+  }
+  function cropCursor(mode) {
+    return ({move:'move',nw:'nwse-resize',se:'nwse-resize',ne:'nesw-resize',sw:'nesw-resize',n:'ns-resize',s:'ns-resize',e:'ew-resize',w:'ew-resize',draw:'crosshair'})[mode] || 'crosshair';
+  }
+  function resizeCropSelection(selection, point, handle) {
+    const c=state.crop, bounds={left:c.imageX,top:c.imageY,right:c.imageX+c.imageW,bottom:c.imageY+c.imageH}, min=3;
+    if(c.cropMode==='fixed') return selection;
+    const oppositeX=handle.includes('w') ? selection.x+selection.w : selection.x;
+    const oppositeY=handle.includes('n') ? selection.y+selection.h : selection.y;
+    let width=selection.w, height=selection.h, x=selection.x, y=selection.y;
+    if(c.cropMode==='ratio'){
+      const target=cropRatioValue(), horizontal=handle==='e'||handle==='w', vertical=handle==='n'||handle==='s';
+      let desiredW=horizontal ? Math.abs(point.x-oppositeX) : Math.abs(point.x-oppositeX);
+      let desiredH=vertical ? Math.abs(point.y-oppositeY) : Math.abs(point.y-oppositeY);
+      if(handle.length===2){
+        if(desiredW/Math.max(desiredH,1)>target) desiredH=desiredW/target; else desiredW=desiredH*target;
+      } else if(horizontal) desiredH=desiredW/target;
+      else desiredW=desiredH*target;
+      const maxW=handle.includes('w') ? oppositeX-bounds.left : bounds.right-oppositeX;
+      const maxH=handle.includes('n') ? oppositeY-bounds.top : bounds.bottom-oppositeY;
+      const scale=Math.min(1,maxW/Math.max(desiredW,1),maxH/Math.max(desiredH,1));
+      width=Math.max(min,desiredW*scale); height=Math.max(min,desiredH*scale);
+      x=handle.includes('w') ? oppositeX-width : oppositeX;
+      y=handle.includes('n') ? oppositeY-height : oppositeY;
+    } else {
+      let left=selection.x, top=selection.y, right=selection.x+selection.w, bottom=selection.y+selection.h;
+      if(handle.includes('w')) left=Math.min(point.x,right-min); if(handle.includes('e')) right=Math.max(point.x,left+min);
+      if(handle.includes('n')) top=Math.min(point.y,bottom-min); if(handle.includes('s')) bottom=Math.max(point.y,top+min);
+      x=left; y=top; width=right-left; height=bottom-top;
+    }
+    return clampCropSelection({x,y,w:width,h:height});
+  }
+  function updateCropInfo() { const c=state.crop, info=$('cropInfo'); if(!info)return; if(!c.image){info.textContent='';return;} info.textContent=`${c.name} · ${c.image.naturalWidth} × ${c.image.naturalHeight} px · ${c.cropMode==='free'?t('crop.freeDraw'):c.cropMode==='ratio'?`${t('crop.fixedRatio')} ${c.ratio}`:`${t('crop.fixedSize')} ${c.fixedWidth} × ${c.fixedHeight}`}`; }
+  function setCropMode(mode) {
+    const c=state.crop;
+    c.cropMode=['free','ratio','fixed'].includes(mode)?mode:'free';
+    q('[data-crop-mode]').forEach(node=>node.classList.toggle('active',node.dataset.cropMode===c.cropMode));
+    const rounded=c.processingMode==='rounded';
+    $('cropRatioControl').hidden=rounded || c.cropMode!=='ratio';
+    $('cropCustomRatioControl').hidden=rounded || c.cropMode!=='ratio' || state.ratios.includes(c.ratio);
+    $('cropFixedControl').hidden=rounded || c.cropMode!=='fixed';
+    if(c.image) c.selection=c.selection ? clampCropSelection(c.selection) : initialCropSelection();
+    updateCropInfo(); drawCrop();
+  }
   function motionPluginInstalled() { return state.plugins.some(plugin => plugin.id === 'android-motion-photo' && plugin.status === 'installed'); }
   function renderMotionPhotoExport() {
     const box=$('motionPhotoExport'), stateChip=$('motionPluginState'), image=$('motionPhotoImage'), video=$('motionPhotoVideo'), choose=$('chooseMotionVideo'), exportButton=$('exportMotionPhoto'), tools=$('motionVideoTools');
     if(!box) return;
+    if(state.crop.processingMode==='rounded'){ box.hidden=true; return; }
+    box.hidden=false;
     const installed=motionPluginInstalled(), crop=state.crop, hasImage=!!crop.image, hasVideo=!!state.motionVideo;
     image.textContent=hasImage ? crop.name : t('motion.noImage');
     video.textContent=hasVideo ? state.motionVideo.name : t('motion.noVideo');
@@ -636,22 +730,96 @@
       else {state.videoPluginReady=false;const message=data&&data.reason==='ffmpeg_missing'?t('video.missing'):t('video.unusable');$('videoPluginState').textContent=message;detail.textContent='';renderVideoPlugin();setStatus(message,false);}
     } catch (_) { state.videoPluginReady=false;$('videoPluginState').textContent=t('video.unusable');detail.textContent='';renderVideoPlugin();setStatus(t('video.unusable'),false); }
   }
-  function setCropMode(mode) { const c=state.crop;c.mode=mode;q('[data-crop-mode]').forEach(n=>n.classList.toggle('active',n.dataset.cropMode===mode));$('cropRatioControl').hidden=mode!=='ratio';$('cropCustomRatioControl').hidden=mode!=='ratio' || state.ratios.includes(c.ratio);$('cropFixedControl').hidden=mode!=='fixed';if(c.selection)c.selection=clampCropSelection(c.selection);updateCropInfo();drawCrop(); }
-  function drawCrop() { const c=state.crop, canvas=$('cropCanvas'), ctx=canvas.getContext('2d'); ctx.clearRect(0,0,canvas.width,canvas.height); const empty=$('cropEmpty'), actionHint=$('cropHint'), preview=document.querySelector('.crop-preview-row'), info=$('cropInfo'), actions=document.querySelector('.crop-actions'), clear=$('clearCrop'); if(!c.image){if(canvas)canvas.style.display='none';if(empty)empty.style.display='';if(actionHint)actionHint.style.display='none';if(preview)preview.style.display='none';if(info)info.style.display='none';if(actions)actions.style.display='none';if(clear)clear.hidden=true;renderMotionPhotoExport();return;} if(canvas)canvas.style.display='';if(empty)empty.style.display='none';if(actionHint)actionHint.style.display=c.selection?'':'none';if(preview)preview.style.display='';if(info)info.style.display='';if(actions)actions.style.display='';if(clear)clear.hidden=false;ctx.fillStyle='#aeb7bd';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(c.image,c.imageX,c.imageY,c.imageW,c.imageH);if(!c.selection)c.selection={x:c.imageX,y:c.imageY,w:c.imageW,h:c.imageH};const s=c.selection;ctx.fillStyle='rgba(10,16,20,.56)';ctx.fillRect(c.imageX,c.imageY,c.imageW,c.imageH);ctx.clearRect(s.x,s.y,s.w,s.h);ctx.drawImage(c.image,(s.x-c.imageX)/c.scale,(s.y-c.imageY)/c.scale,s.w/c.scale,s.h/c.scale,s.x,s.y,s.w,s.h);if(c.mode==='fixed'){ctx.fillStyle='rgba(255,189,74,.08)';ctx.fillRect(s.x,s.y,s.w,s.h);}ctx.strokeStyle='#44d9e6';ctx.lineWidth=2;ctx.setLineDash(c.mode==='free'?[7,4]:[]);ctx.strokeRect(s.x,s.y,s.w,s.h);ctx.setLineDash([]);ctx.fillStyle='#ffbd4a';[[s.x,s.y],[s.x+s.w,s.y],[s.x,s.y+s.h],[s.x+s.w,s.y+s.h]].forEach(([x,y])=>ctx.fillRect(x-4,y-4,8,8));renderMotionPhotoExport(); }
-  function setCropSource(data,name,path,fromPicker=false,dropped=false,sourceSize=null) { const image=new Image(); image.onload=()=>{ const c=state.crop, canvas=$('cropCanvas'), overwrite=$('overwriteCrop'); c.image=image;c.name=name||'image.png';c.path=fromPicker?(path||''):'';c.sourceScaleX=sourceSize&&sourceSize.width?sourceSize.width/image.width:1;c.sourceScaleY=sourceSize&&sourceSize.height?sourceSize.height/image.height:1;c.scale=Math.min((canvas.width-24)/image.width,(canvas.height-24)/image.height,1);c.imageW=image.width*c.scale;c.imageH=image.height*c.scale;c.imageX=(canvas.width-c.imageW)/2;c.imageY=(canvas.height-c.imageH)/2;c.selection={x:c.imageX,y:c.imageY,w:c.imageW,h:c.imageH};overwrite.checked=false;overwrite.disabled=!c.path;overwrite.closest('.switch').classList.toggle('is-disabled',!c.path);$('cropStatus').textContent=dropped?t('crop.dropReady'):'';if(dropped)setStatus(t('crop.dropReady'),'info');updateCropInfo();drawCrop(); }; image.onerror=()=>setStatus(t('crop.dropInvalid'),false); image.src=data; }
+  function roundedRadiusPixels(c=state.crop) { const width=Number(c.originalWidth||c.image?.naturalWidth||0), height=Number(c.originalHeight||c.image?.naturalHeight||0); return Math.round(Math.min(width,height)*Math.max(0,Math.min(50,Number(c.roundedPercent)||0))/100); }
+  function updateRoundedInfo() { const c=state.crop, value=$('roundedRadiusValue'), info=$('roundedOutputInfo'), slider=$('roundedRadius'); if(value)value.textContent=`${Number(c.roundedPercent||0).toFixed(1).replace('.0','')}% · ${roundedRadiusPixels(c)}px`; if(slider)slider.value=String(c.roundedPercent||0); if(info&&c.image){const format=c.roundedFormat==='ico'?`ICO · ${getIcoSizesForDisplay().length} sizes`:c.roundedFormat.toUpperCase();info.textContent=`${t('crop.roundedOutput')}：${c.originalWidth} × ${c.originalHeight} px · ${format}`;}else if(info)info.textContent=''; }
+  function setCropEditMode(mode) { const c=state.crop;c.processingMode=mode==='rounded'?'rounded':'crop';q('[data-crop-transform]').forEach(n=>n.classList.toggle('active',n.dataset.cropTransform===c.processingMode));const rounded=c.processingMode==='rounded';const modes=document.querySelector('.crop-modes');if(modes)modes.hidden=rounded;$('cropRatioControl').hidden=rounded || c.cropMode!=='ratio';$('cropCustomRatioControl').hidden=rounded || c.cropMode!=='ratio' || state.ratios.includes(c.ratio);$('cropFixedControl').hidden=rounded || c.cropMode!=='fixed';$('roundedControls').hidden=rounded || !c.image;const actions=document.querySelector('.crop-actions');if(actions)actions.hidden=rounded;const hint=$('cropHint');if(hint)hint.style.display=rounded?'none':(c.selection?'':'none');updateRoundedInfo();drawCrop(); }
+  function setRoundedPreset(preset) { const c=state.crop;c.roundedPreset=preset==='none'?'none':'rounded';c.roundedPercent=c.roundedPreset==='none'?0:12;q('[data-rounded-preset]').forEach(n=>n.classList.toggle('active',n.dataset.roundedPreset===c.roundedPreset));updateRoundedInfo();drawCrop(); }
+  function getIcoSizesForDisplay() { const c=state.crop; if(c.icoMode==='recommended')return [16,24,32,48,256]; return Array.isArray(c.icoSizes)?c.icoSizes.slice().sort((a,b)=>a-b):[]; }
+  function updateIcoSizeSummary() { const c=state.crop, checks=q('[data-ico-size]'); if(!checks.length)return; c.icoSizes=checks.filter(node=>node.checked).map(node=>Number(node.value)).filter(Number.isFinite).sort((a,b)=>a-b); const summary=$('icoSizeSummary'); if(summary)summary.textContent=c.icoSizes.length?`${c.icoSizes.join(' · ')} px`:`${t('crop.icoNoSizes')}`; }
+  function syncRoundedFormatUi() { const c=state.crop, ico=c.roundedFormat==='ico', controls=$('icoControls'), label=$('roundedSaveLabel'); q('[data-rounded-format]').forEach(n=>n.classList.toggle('active',n.dataset.roundedFormat===c.roundedFormat)); if(controls)controls.hidden=!ico; if(label){label.dataset.i18n=ico?'crop.icoSave':'crop.roundedSave';label.textContent=t(label.dataset.i18n);} if(ico)setIcoMode(c.icoMode); updateRoundedInfo(); }
+  function setRoundedFormat(format) { const c=state.crop;c.roundedFormat=['webp','ico'].includes(format)?format:'png';syncRoundedFormatUi(); }
+  function setIcoMode(mode) { const c=state.crop;c.icoMode=mode==='custom'?'custom':'recommended';q('[name="icoSizeMode"]').forEach(node=>{node.checked=node.value===c.icoMode;});const custom=c.icoMode==='custom';const customBox=$('icoCustomSizes'),hint=$('icoRecommendedHint');if(customBox)customBox.hidden=!custom;if(hint)hint.hidden=custom;q('[data-ico-size]').forEach(node=>{node.disabled=!custom;});updateIcoSizeSummary();updateRoundedInfo(); }
+  function setIcoAdvanced(expanded) { state.crop.icoAdvanced=!!expanded;const toggle=$('icoAdvancedToggle');if(toggle)toggle.checked=state.crop.icoAdvanced;const advanced=$('icoAdvancedSizes');if(advanced)advanced.hidden=!state.crop.icoAdvanced; }
+  function roundedPath(ctx,x,y,w,h,r) { r=Math.max(0,Math.min(r,Math.min(w,h)/2));ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath(); }
+  function drawRoundedPreview(c,ctx) { const radius=roundedRadiusPixels(c)*(c.imageW/Math.max(1,c.originalWidth||c.image.naturalWidth));ctx.save();ctx.drawImage(c.image,c.imageX,c.imageY,c.imageW,c.imageH);ctx.globalCompositeOperation='destination-in';roundedPath(ctx,c.imageX,c.imageY,c.imageW,c.imageH,radius);ctx.fill();ctx.restore(); }
+  function drawCrop() {
+    const c=state.crop, canvas=$('cropCanvas'), ctx=canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const empty=$('cropEmpty'), actionHint=$('cropHint'), preview=document.querySelector('.crop-preview-row'), info=$('cropInfo'), actions=document.querySelector('.crop-actions'), clear=$('clearCrop'), roundedControls=$('roundedControls');
+    if(!c.image){
+      canvas.style.display='none'; empty.style.display=''; actionHint.style.display='none'; preview.style.display='none'; info.style.display='none';
+      actions.style.display='none'; clear.hidden=true; roundedControls.hidden=true; canvas.style.cursor='crosshair'; renderMotionPhotoExport(); return;
+    }
+    canvas.style.display=''; empty.style.display='none'; preview.style.display=''; info.style.display=''; clear.hidden=false; roundedControls.hidden=c.processingMode!=='rounded';
+    if(c.processingMode==='rounded'){
+      actionHint.style.display='none'; actions.hidden=true; drawRoundedPreview(c,ctx); updateRoundedInfo(); renderMotionPhotoExport(); return;
+    }
+    actionHint.style.display=c.selection?'':'none'; actions.hidden=false; actions.style.display='';
+    ctx.fillStyle='#aeb7bd'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.drawImage(c.image,c.imageX,c.imageY,c.imageW,c.imageH);
+    if(!c.selection){ renderMotionPhotoExport(); return; }
+    const s=c.selection;
+    ctx.fillStyle='rgba(10,16,20,.56)'; ctx.fillRect(c.imageX,c.imageY,c.imageW,c.imageH); ctx.clearRect(s.x,s.y,s.w,s.h);
+    ctx.drawImage(c.image,(s.x-c.imageX)/c.scale,(s.y-c.imageY)/c.scale,s.w/c.scale,s.h/c.scale,s.x,s.y,s.w,s.h);
+    if(c.cropMode==='fixed'){ctx.fillStyle='rgba(255,189,74,.08)';ctx.fillRect(s.x,s.y,s.w,s.h);}
+    ctx.strokeStyle='#44d9e6'; ctx.lineWidth=2; ctx.setLineDash(c.cropMode==='free'?[7,4]:[]); ctx.strokeRect(s.x,s.y,s.w,s.h); ctx.setLineDash([]);
+    ctx.fillStyle='#ffbd4a';
+    const handles=[[s.x,s.y],[s.x+s.w/2,s.y],[s.x+s.w,s.y],[s.x,s.y+s.h/2],[s.x+s.w,s.y+s.h/2],[s.x,s.y+s.h],[s.x+s.w/2,s.y+s.h],[s.x+s.w,s.y+s.h]];
+    handles.forEach(([x,y])=>ctx.fillRect(x-4,y-4,8,8)); renderMotionPhotoExport();
+  }
+  function setCropSource(data,name,path,fromPicker=false,dropped=false,sourceSize=null) {
+    const image=new Image();
+    image.onload=()=>{
+      const c=state.crop,canvas=$('cropCanvas'),overwrite=$('overwriteCrop');
+      c.image=image; c.name=name||'image.png'; c.path=fromPicker?(path||''):''; c.sourceDataUrl=fromPicker?'':data;
+      c.originalWidth=sourceSize&&sourceSize.width?sourceSize.width:image.naturalWidth; c.originalHeight=sourceSize&&sourceSize.height?sourceSize.height:image.naturalHeight;
+      c.sourceScaleX=c.originalWidth/image.naturalWidth; c.sourceScaleY=c.originalHeight/image.naturalHeight;
+      c.scale=Math.min((canvas.width-24)/image.width,(canvas.height-24)/image.height,1); c.imageW=image.width*c.scale; c.imageH=image.height*c.scale;
+      c.imageX=(canvas.width-c.imageW)/2; c.imageY=(canvas.height-c.imageH)/2; c.selection=initialCropSelection();
+      overwrite.checked=false; overwrite.disabled=!c.path; overwrite.closest('.switch').classList.toggle('is-disabled',!c.path);
+      $('cropStatus').textContent=dropped?t('crop.dropReady'):''; if(dropped)setStatus(t('crop.dropReady'),'info');
+      updateCropInfo(); updateRoundedInfo(); drawCrop();
+    };
+    image.onerror=()=>setStatus(t('crop.dropInvalid'),false); image.src=data;
+  }
   function isSupportedDropImage(file) { const name=String(file&&file.name||'').toLowerCase(); return !!file && (String(file.type||'').startsWith('image/') || /\.(png|jpe?g|bmp|gif|apng|webp|ico|tiff?)$/.test(name)); }
   function loadDroppedCropFile(file) { if(!isSupportedDropImage(file)){setStatus(t('crop.dropInvalid'),false);return;} if(file.size>64*1024*1024){setStatus('图片过大，请使用“选择文件”加载。',false);return;} const reader=new FileReader();reader.onload=()=>setCropSource(reader.result,file.name,'',false,true);reader.onerror=()=>setStatus(t('crop.dropInvalid'),false);reader.readAsDataURL(file); }
   function bindCropDropTarget() { const box=$('cropBox');let depth=0;const hasFiles=event=>Array.from(event.dataTransfer?.types||[]).includes('Files');box.addEventListener('dragenter',event=>{if(!hasFiles(event))return;event.preventDefault();depth+=1;box.classList.add('is-dragging');});box.addEventListener('dragover',event=>{if(!hasFiles(event))return;event.preventDefault();event.dataTransfer.dropEffect='copy';box.classList.add('is-dragging');});box.addEventListener('dragleave',event=>{if(!hasFiles(event))return;depth=Math.max(0,depth-1);if(!depth)box.classList.remove('is-dragging');});box.addEventListener('drop',event=>{event.preventDefault();depth=0;box.classList.remove('is-dragging');loadDroppedCropFile(event.dataTransfer.files&&event.dataTransfer.files[0]);}); }
   function setupCrop() {
     $('cropFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;loadDroppedCropFile(file);});
     $('chooseCrop').addEventListener('click',async()=>{const result=await apiCall('choose_crop_image');if(result&&result.ok!==false)setCropSource(result.data_url,result.name,result.path,true,false,result.source_size);else if(result)setStatus(result.error==='crop_source_too_large'?'图片过大，暂不支持载入。':t('crop.dropInvalid'),false);});
-    const canvas=$('cropCanvas'); bindCropDropTarget();
-    canvas.addEventListener('pointerdown',e=>{if(!state.crop.image)return;const c=state.crop,p=cropCanvasPoint(e);c.dragging=true;c.dragStart=p;if(c.selection&&p.x>=c.selection.x&&p.x<=c.selection.x+c.selection.w&&p.y>=c.selection.y&&p.y<=c.selection.y+c.selection.h){c.dragMode='move';c.dragOffset={x:p.x-c.selection.x,y:p.y-c.selection.y};}else{c.dragMode='draw';c.selection={x:p.x,y:p.y,w:1,h:1};}canvas.setPointerCapture(e.pointerId);});
-    canvas.addEventListener('pointermove',e=>{const c=state.crop;if(!c.dragging)return;const p=cropCanvasPoint(e);if(c.dragMode==='move'){c.selection=clampCropSelection({x:p.x-c.dragOffset.x,y:p.y-c.dragOffset.y,w:c.selection.w,h:c.selection.h});}else{const start=c.dragStart;c.selection=clampCropSelection({x:Math.min(start.x,p.x),y:Math.min(start.y,p.y),w:Math.abs(p.x-start.x),h:Math.abs(p.y-start.y)});}drawCrop();});
-    const stopDrag=()=>{state.crop.dragging=false;state.crop.dragMode='draw';}; canvas.addEventListener('pointerup',stopDrag);canvas.addEventListener('pointercancel',stopDrag);
-    q('[data-crop-mode]').forEach(node=>node.addEventListener('click',()=>setCropMode(node.dataset.cropMode))); $('clearCrop').addEventListener('click',()=>{state.crop.image=null;state.crop.name='';state.crop.path='';state.crop.selection=null;$('cropFile').value='';$('cropStatus').textContent='';drawCrop();}); $('cropRatioSelect').addEventListener('change',e=>{if(e.target.value===CUSTOM_RATIO){$('cropCustomRatioControl').hidden=false;$('cropCustomRatio').focus();return;}state.crop.ratio=e.target.value;$('cropCustomRatioControl').hidden=true;if(state.crop.selection)state.crop.selection=clampCropSelection(state.crop.selection);updateCropInfo();drawCrop();}); $('applyCropCustomRatio').addEventListener('click',()=>{const value=normalizeRatioText($('cropCustomRatio').value);if(!value){setStatus(t('ratio.invalid'),false);return;}state.crop.ratio=value;$('cropRatioSelect').value=CUSTOM_RATIO;$('cropCustomRatioControl').hidden=false;if(state.crop.selection)state.crop.selection=clampCropSelection(state.crop.selection);updateCropInfo();drawCrop();}); $('cropFixedW').addEventListener('change',e=>{state.crop.fixedWidth=e.target.value;if(state.crop.selection)state.crop.selection=clampCropSelection(state.crop.selection);updateCropInfo();drawCrop();}); $('cropFixedH').addEventListener('change',e=>{state.crop.fixedHeight=e.target.value;if(state.crop.selection)state.crop.selection=clampCropSelection(state.crop.selection);updateCropInfo();drawCrop();}); $('saveCrop').addEventListener('click',saveCrop);$('chooseMotionVideo').addEventListener('click',chooseMotionVideo);$('exportMotionPhoto').addEventListener('click',exportMotionPhoto);setCropMode('free');
+    const canvas=$('cropCanvas');bindCropDropTarget();
+    canvas.addEventListener('pointerdown',e=>{
+      const c=state.crop;if(!c.image||c.processingMode==='rounded')return;
+      const p=cropCanvasPoint(e),hit=cropHandleAt(p); if(c.cropMode==='fixed'&&hit!=='move')return; c.dragging=true; c.dragStart=p; c.dragMode=hit||'draw';
+      if(hit==='move'&&c.selection)c.dragOffset={x:p.x-c.selection.x,y:p.y-c.selection.y};
+      else if(!hit)c.selection={x:p.x,y:p.y,w:1,h:1};
+      canvas.style.cursor=cropCursor(c.dragMode); canvas.setPointerCapture(e.pointerId); drawCrop();
+    });
+    canvas.addEventListener('pointermove',e=>{
+      const c=state.crop,p=cropCanvasPoint(e);
+      if(!c.dragging){canvas.style.cursor=cropCursor(cropHandleAt(p));return;}
+      if(c.dragMode==='move'&&c.selection){c.selection=clampCropSelection({x:p.x-c.dragOffset.x,y:p.y-c.dragOffset.y,w:c.selection.w,h:c.selection.h});}
+      else if(c.dragMode==='draw'){const start=c.dragStart;c.selection=clampCropSelection({x:Math.min(start.x,p.x),y:Math.min(start.y,p.y),w:Math.abs(p.x-start.x),h:Math.abs(p.y-start.y)});}
+      else if(c.selection)c.selection=resizeCropSelection(c.selection,p,c.dragMode);
+      canvas.style.cursor=cropCursor(c.dragMode); drawCrop();
+    });
+    const stopDrag=e=>{state.crop.dragging=false;state.crop.dragMode='draw';canvas.style.cursor=e?cropCursor(cropHandleAt(cropCanvasPoint(e))):'crosshair';};
+    canvas.addEventListener('pointerup',stopDrag);canvas.addEventListener('pointercancel',stopDrag);canvas.addEventListener('pointerleave',e=>{if(!state.crop.dragging)canvas.style.cursor='crosshair';});
+    q('[data-crop-transform]').forEach(node=>node.addEventListener('click',()=>setCropEditMode(node.dataset.cropTransform)));
+    q('[data-rounded-preset]').forEach(node=>node.addEventListener('click',()=>setRoundedPreset(node.dataset.roundedPreset)));
+    q('[data-rounded-format]').forEach(node=>node.addEventListener('click',()=>setRoundedFormat(node.dataset.roundedFormat)));
+    q('[name="icoSizeMode"]').forEach(node=>node.addEventListener('change',()=>setIcoMode(node.value)));
+    q('[data-ico-size]').forEach(node=>node.addEventListener('change',()=>{updateIcoSizeSummary();updateRoundedInfo();}));
+    $('icoAdvancedToggle').addEventListener('change',e=>setIcoAdvanced(e.target.checked));
+    $('roundedRadius').addEventListener('input',e=>{state.crop.roundedPercent=Math.max(0,Math.min(50,Number(e.target.value)||0));state.crop.roundedPreset=state.crop.roundedPercent===0?'none':'rounded';q('[data-rounded-preset]').forEach(n=>n.classList.toggle('active',n.dataset.roundedPreset===state.crop.roundedPreset));updateRoundedInfo();drawCrop();});
+    q('[data-crop-mode]').forEach(node=>node.addEventListener('click',()=>setCropMode(node.dataset.cropMode)));$('clearCrop').addEventListener('click',()=>{state.crop.image=null;state.crop.name='';state.crop.path='';state.crop.sourceDataUrl='';state.crop.originalWidth=0;state.crop.originalHeight=0;state.crop.selection=null;$('cropFile').value='';$('cropStatus').textContent='';drawCrop();});
+    $('cropRatioSelect').addEventListener('change',e=>{if(e.target.value===CUSTOM_RATIO){$('cropCustomRatioControl').hidden=false;$('cropCustomRatio').focus();return;}state.crop.ratio=e.target.value;$('cropCustomRatioControl').hidden=true;if(state.crop.selection)state.crop.selection=clampCropSelection(state.crop.selection);updateCropInfo();drawCrop();});
+    $('applyCropCustomRatio').addEventListener('click',()=>{const value=normalizeRatioText($('cropCustomRatio').value);if(!value){setStatus(t('ratio.invalid'),false);return;}state.crop.ratio=value;$('cropRatioSelect').value=CUSTOM_RATIO;$('cropCustomRatioControl').hidden=false;if(state.crop.selection)state.crop.selection=clampCropSelection(state.crop.selection);updateCropInfo();drawCrop();});
+    $('cropFixedW').addEventListener('change',e=>{state.crop.fixedWidth=e.target.value;if(state.crop.selection)state.crop.selection=clampCropSelection(state.crop.selection);updateCropInfo();drawCrop();});$('cropFixedH').addEventListener('change',e=>{state.crop.fixedHeight=e.target.value;if(state.crop.selection)state.crop.selection=clampCropSelection(state.crop.selection);updateCropInfo();drawCrop();});
+    $('saveCrop').addEventListener('click',saveCrop);$('saveRounded').addEventListener('click',saveRoundedImage);$('openRoundedFolder').addEventListener('click',()=>apiCall('open_folder'));$('chooseMotionVideo').addEventListener('click',chooseMotionVideo);$('exportMotionPhoto').addEventListener('click',exportMotionPhoto);setCropMode('free');setRoundedPreset('rounded');setRoundedFormat('png');setCropEditMode('rect');
     $('motionClipMode').addEventListener('change',()=>renderMotionPhotoExport());$('motionClipStart').addEventListener('change',()=>renderMotionPhotoExport());$('motionClipDuration').addEventListener('change',()=>renderMotionPhotoExport());$('motionProfile').addEventListener('change',()=>renderMotionPhotoExport());$('motionThumbnails').addEventListener('click',event=>{const button=event.target.closest('[data-motion-time]');if(!button)return;openMotionFrame(button.dataset.motionTime);});
   }
+  async function saveRoundedImage() { const c=state.crop;if(!c.image){setStatus(t('crop.needImage'),false);return;}if(!c.path&&!c.sourceDataUrl){setStatus(t('crop.roundedNoSource'),false);return;}const icoSizes=c.roundedFormat==='ico'?getIcoSizesForDisplay():null;if(c.roundedFormat==='ico'&&!icoSizes.length){setStatus(t('crop.icoNoSizes'),false);return;}$('cropStatus').textContent=t('common.saving');setStatus(t('common.saving'),'progress');try{const result=await apiCall('save_rounded_image',c.sourceDataUrl||'',c.name,c.roundedPercent,c.roundedFormat,c.path,icoSizes);if(result&&result.ok){const message=`${t('common.saved')}: ${result.path}`;$('cropStatus').textContent=message;setStatus(message,true);loadState();}else{const message=result&&result.error==='rounded_animation_unsupported'?t('crop.roundedNoAnimation'):result&&result.error==='rounded_output_format_invalid'?t('crop.roundedFormatInvalid'):result&&result.error==='rounded_radius_invalid'?t('crop.roundedRadiusInvalid'):result&&result.error==='ico_sizes_empty'?t('crop.icoNoSizes'):result&&result.error==='ico_size_invalid'?t('crop.icoSizeInvalid'):t('crop.saveFailed');$('cropStatus').textContent=message;setStatus(message,false);}}catch(_){const message=t('crop.saveFailed');$('cropStatus').textContent=message;setStatus(message,false);} }
   async function saveCrop() { const c=state.crop;if(!c.image){setStatus(t('crop.needImage'),false);return;}if(!c.selection||c.selection.w<3||c.selection.h<3){setStatus(t('crop.needArea'),false);return;}const s=c.selection,cropRect={x:(s.x-c.imageX)/c.scale,y:(s.y-c.imageY)/c.scale,width:s.w/c.scale,height:s.h/c.scale},sourceRect={x:cropRect.x*(c.sourceScaleX||1),y:cropRect.y*(c.sourceScaleY||1),width:cropRect.width*(c.sourceScaleX||1),height:cropRect.height*(c.sourceScaleY||1)},out=document.createElement('canvas');out.width=Math.max(1,Math.round(cropRect.width));out.height=Math.max(1,Math.round(cropRect.height));out.getContext('2d').drawImage(c.image,cropRect.x,cropRect.y,cropRect.width,cropRect.height,0,0,out.width,out.height);const overwrite=$('overwriteCrop').checked;if(overwrite&&!c.path){setStatus(t('crop.overwriteHint'),false);return;}$('cropStatus').textContent=t('common.saving');setStatus(t('common.saving'),'progress');try{const result=await apiCall('save_crop',out.toDataURL('image/png'),c.name,overwrite,c.path,sourceRect);if(result&&result.ok){const message=`${t('common.saved')}: ${result.path}`;$('cropStatus').textContent=message;setStatus(message,true);loadState();}else{const message=result&&result.error==='invalid_crop_data'?t('crop.invalidData'):t('crop.saveFailed');$('cropStatus').textContent=message;setStatus(message,false);}}catch(_){const message=t('crop.saveFailed');$('cropStatus').textContent=message;setStatus(message,false);} }
 
   async function loadState() { try { const result=await apiCall('state'); state.config=result.config||{};state.ratios=Array.isArray(result.ratio_presets)&&result.ratio_presets.length ? result.ratio_presets : RATIOS;state.selectionModes=result.selection_modes||state.selectionModes;state.imageFormats=result.image_formats||IMAGE_FORMATS;state.gifFormats=result.gif_formats||GIF_FORMATS;state.fps=result.gif_fps||FPS;state.gifModes=result.gif_modes||GIF_MODES;state.files=result.files||[];state.plugins=result.plugins||[];state.pluginRoot=result.plugin_root||'';state.stats=result.project_stats||state.stats;state.listener_running=result.listener_running; await setTheme(state.config.theme || 'light', false); applyI18n();renderAll(); } catch (error) { console.error(error); } }
@@ -672,7 +840,7 @@
     bound = true;
     setSidebarCollapsed(localStorage.getItem('xaocen-sidebar-collapsed') === '1'); document.addEventListener('click',event=>{const button=event.target.closest('#collapseSidebar');if(button){event.preventDefault();event.stopPropagation();const next=!document.body.classList.contains('sidebar-collapsed');setSidebarCollapsed(next);localStorage.setItem('xaocen-sidebar-collapsed',next?'1':'0');return;}const brand=event.target.closest('#brand');if(brand&&document.body.classList.contains('sidebar-collapsed')){setSidebarCollapsed(false);localStorage.setItem('xaocen-sidebar-collapsed','0');}}); q('[data-go]').forEach(node=>node.addEventListener('click',()=>go(node.dataset.go))); $('openPluginDirectory').addEventListener('click',openPluginDirectory); $('choosePluginDirectory').addEventListener('click',choosePluginDirectory); $('resetPluginDirectory').addEventListener('click',resetPluginDirectory); $('installPluginPackage').addEventListener('click',installPluginPackage); $('themeMode').addEventListener('change',e=>setTheme(e.target.value)); $('languageMode').addEventListener('change',e=>setLanguage(e.target.value)); $('shotModeFree').addEventListener('click',()=>setShotMode('free',true)); $('shotModeRatio').addEventListener('click',()=>setShotMode('ratio',true));$('shotModeFixed').addEventListener('click',()=>setShotMode('fixed',true));$('chooseShotDir').addEventListener('click',()=>chooseSaveDirectory('shotSaveDir'));$('chooseGifDir').addEventListener('click',()=>chooseSaveDirectory('gifSaveDir'));$('chooseSaveDir').addEventListener('click',()=>chooseSaveDirectory('saveDir'));$('applyShotCustomRatio').addEventListener('click',applyShotCustomRatio);$('shotCustomRatio').addEventListener('keydown',e=>{if(e.key==='Enter')applyShotCustomRatio();});$('applyGifCustomRatio').addEventListener('click',applyGifCustomRatio);$('gifCustomRatio').addEventListener('keydown',e=>{if(e.key==='Enter')applyGifCustomRatio();});$('saveShot').addEventListener('click',()=>saveCapture(true));$('restartListener').addEventListener('click',async()=>{await apiCall('restart_screenshot');state.listener_running=true;syncConfig();$('listenerStatus').textContent=t('status.restarted');});$('launchGif').addEventListener('click',()=>apiCall('launch','gif'));$('settingFps').addEventListener('change',e=>saveGif({gif_fps:Number(e.target.value)}));$('settingFormat').addEventListener('change',e=>saveGif({gif_format:e.target.value}));$('gifFixedW').addEventListener('change',e=>saveGif({gif_fixed_width_str:e.target.value}));$('gifFixedH').addEventListener('change',e=>saveGif({gif_fixed_height_str:e.target.value}));$('saveShortcuts').addEventListener('click',applyShortcuts);$('saveOther').addEventListener('click',async()=>{const data={gif_fps:Number($('settingFps').value),gif_format:$('settingFormat').value,gif_fixed_width_str:$('gifFixedW').value,gif_fixed_height_str:$('gifFixedH').value,save_directory:$('saveDir').value,theme:$('themeMode').value,language:$('languageMode').value};const result=await apiCall('save_other_settings',data);if(result&&result.config){state.config=result.config;applyI18n();renderAll();setStatus(t('common.saved'),true);}else setStatus((result&&result.message)||'设置保存失败，请稍后重试。',false);});
     $('checkVideoPlugin').addEventListener('click',checkVideoPlugin); $('launchVideo').addEventListener('click',()=>apiCall('launch','video')); $('openMotionOutput').addEventListener('click',()=>apiCall('open_folder'));
-    setupKeyCapture('hotkey','hotkey');setupKeyCapture('recordStart','record_start_key');setupKeyCapture('recordStop','record_stop_key');setupGallery();setupCrop();
+    $('startWithWindows').addEventListener('change',async e=>{const result=await apiCall('save_other_settings',{start_with_windows:e.target.checked});if(result&&result.config){state.config=result.config;renderSettings();setStatus(t('common.saved'),true);}else{e.target.checked=!!state.config.start_with_windows;setStatus((result&&result.message)||'设置保存失败，请稍后重试。',false);}}); setupKeyCapture('hotkey','hotkey');setupKeyCapture('recordStart','record_start_key');setupKeyCapture('recordStop','record_stop_key');setupGallery();setupCrop();
   }
   window.addEventListener('pywebviewready',()=>{ bind();loadState(); });
   if (window.pywebview) { bind(); loadState(); }

@@ -1,0 +1,30 @@
+{
+  "experiment": "native_control",
+  "created_at": "2026-08-15T02:43:42.738225+00:00",
+  "source_sample": "C:\\Users\\TOM\\Downloads\\MVIMG_20260715_055104.jpg",
+  "local_file": "C:\\Users\\TOM\\Desktop\\xaocen-imgtor\\tests\\motion_photo_lab\\adb\\MVIMG_NATIVE_CONTROL_20260815.jpg",
+  "sha256": "c23d53fea187fa4ce3717c414494a7a5cfbcf85b4ec9f7ae53153116f863214a",
+  "remote_file": "/sdcard/DCIM/Camera/MVIMG_NATIVE_CONTROL_20260815.jpg",
+  "remote_sha256": "c23d53fea187fa4ce3717c414494a7a5cfbcf85b4ec9f7ae53153116f863214a",
+  "size": 10876813,
+  "device": {
+    "serial": "ce8df63f",
+    "manufacturer": "Xiaomi",
+    "brand": "Redmi",
+    "model": "23013RK75C",
+    "device": "mondrian",
+    "android": "15",
+    "sdk": "35",
+    "incremental": "OS3.0.8.0.VMNCNXM",
+    "hyperos": "V816",
+    "miui": "816",
+    "build": "AQ3A.250226.002"
+  },
+  "hyperos_result": {
+    "reported_by_user": true,
+    "visible": true,
+    "motion_badge": true,
+    "playable": true,
+    "audio": true
+  }
+}

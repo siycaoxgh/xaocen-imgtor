@@ -1,0 +1,115 @@
+--- native_markers.json
++++ imgtor_markers.json
+@@ -11,54 +11,62 @@
+     "index": 1,
+     "marker": "APP1",
+     "offset": 2,
++    "length": 102,
++    "payload_length": 98,
++    "payload_type": "Exif"
++  },
++  {
++    "index": 2,
++    "marker": "APP1",
++    "offset": 104,
++    "length": 538,
++    "payload_length": 534,
++    "payload_type": "XMP"
++  },
++  {
++    "index": 3,
++    "marker": "APP1",
++    "offset": 642,
+     "length": 6902,
+     "payload_length": 6898,
+     "payload_type": "Exif"
+   },
+   {
+-    "index": 2,
++    "index": 4,
+     "marker": "APP3",
+-    "offset": 6904,
++    "offset": 7544,
+     "length": 6162,
+     "payload_length": 6158,
+     "payload_type": ""
+   },
+   {
+-    "index": 3,
++    "index": 5,
+     "marker": "APP4",
+-    "offset": 13066,
++    "offset": 13706,
+     "length": 472,
+     "payload_length": 468,
+     "payload_type": ""
+   },
+   {
+-    "index": 4,
++    "index": 6,
+     "marker": "APP2",
+-    "offset": 13538,
++    "offset": 14178,
+     "length": 650,
+     "payload_length": 646,
+     "payload_type": "ICC Profile"
+   },
+   {
+-    "index": 5,
+-    "marker": "APP1",
+-    "offset": 14188,
+-    "length": 465,
+-    "payload_length": 461,
+-    "payload_type": "XMP"
+-  },
+-  {
+-    "index": 6,
++    "index": 7,
+     "marker": "DQT",
+-    "offset": 14653,
++    "offset": 14828,
+     "length": 134,
+     "payload_length": 130,
+     "payload_type": ""
+   },
+   {
+-    "index": 7,
++    "index": 8,
+     "marker": "SOF0 (baseline)",
+-    "offset": 14787,
++    "offset": 14962,
+     "length": 19,
+     "payload_length": 15,
+     "payload_type": "",
+@@ -82,25 +90,25 @@
+     ]
+   },
+   {
+-    "index": 8,
++    "index": 9,
+     "marker": "DHT",
+-    "offset": 14806,
++    "offset": 14981,
+     "length": 420,
+     "payload_length": 416,
+     "payload_type": ""
+   },
+   {
+-    "index": 9,
++    "index": 10,
+     "marker": "SOS",
+-    "offset": 15226,
++    "offset": 15401,
+     "length": 14,
+     "payload_length": 10,
+     "payload_type": ""
+   },
+   {
+-    "index": 10,
++    "index": 11,
+     "marker": "EOI",
+-    "offset": 4572005,
++    "offset": 4572180,
+     "length": 2,
+     "payload_length": 0,
+     "payload_type": ""

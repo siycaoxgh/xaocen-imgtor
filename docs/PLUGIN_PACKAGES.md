@@ -10,8 +10,8 @@
 ## 打包可信插件
 
 ```powershell
-python plugin_packager.py .\plugin_examples\android_motion_photo
-python plugin_packager.py .\plugin_examples\video_recorder_ffmpeg .\video-recorder-ffmpeg.xaocen-plugin
+python tools\package_plugin.py .\plugin_examples\android_motion_photo
+python tools\package_plugin.py .\plugin_examples\video_recorder_ffmpeg .\video-recorder-ffmpeg.xaocen-plugin
 ```
 
 包内仍是普通的 `plugin.json` 与插件源码；安装后插件以文件夹形式运行，方便升级和排查问题。

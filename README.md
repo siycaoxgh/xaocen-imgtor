@@ -27,7 +27,7 @@ python -m pip install -r requirements.txt
 
 ### 免安装发行版
 
-运行 `release/XAOCEN-ImgTor.exe`，或解压 `release/XAOCEN-ImgTor-v4.9.0-portable.zip` 后直接运行。
+运行 `release/XAOCEN-ImgTor-v5.3.2.exe`，或解压 `release/XAOCEN-ImgTor-v5.3.2-portable.zip` 后直接运行。
 
 发布包不包含用户配置、插件和 FFmpeg；这些内容保存在用户目录中，避免单文件 EXE 临时目录被写入。
 
@@ -48,6 +48,7 @@ python -m pip install -r requirements.txt
 - [平台支持说明](docs/PLATFORM_SUPPORT.md)：Windows、macOS 和 Linux 的支持范围。
 - [插件分发说明](docs/PLUGIN_PACKAGES.md)：`.xaocen-plugin` 格式和完整性校验。
 - [FFmpeg 安装说明](docs/FFMPEG_SETUP.md)：视频插件的外部 FFmpeg 配置。
+- [启动与资源说明](docs/STARTUP_AND_RESOURCES.md)：开机自启动、发布包体积和内存占用边界。
 - [Apache-2.0 许可证](LICENSE)
 - [归档仓库](https://github.com/siycaoxgh/xaocen-imgtor-archive)：旧版入口、旧 Tk 界面和测试历史。
 
@@ -60,7 +61,7 @@ python -m unittest discover -s tests -q
 node --check ui/app.js
 ```
 
-PyInstaller 构建配置位于 `XAOCEN-ImgTor.spec`。核心程序与媒体插件分离，以控制安装体积和常驻内存；FFmpeg 仅在视频功能使用时由插件调用。
+PyInstaller 构建配置位于 `XAOCEN-ImgTor.spec`。核心程序与媒体插件分离，以控制安装体积和常驻内存；FFmpeg 仅在视频功能使用时由插件调用。设置页可选“开机自启动”，登录 Windows 后自动启动截图监听。
 
 ## 品牌与版权
 
